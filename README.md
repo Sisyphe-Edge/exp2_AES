@@ -8,7 +8,8 @@ The first experiment to implement S-DES algorithm.
 #### Functions
 - Inpput
 - Output
-####
+#### Data
+#### Function
 
 ### key scheduler
 <img width="473" alt="image" src="https://github.com/Sisyphe-Edge/exp1_SDES/assets/54466829/c48d018b-fcad-41b9-8556-089b76e9b70b" style="justify-content=:center">
@@ -29,12 +30,12 @@ The first experiment to implement S-DES algorithm.
 ### S-DES scheduler
 <img width="383" alt="image" src="https://github.com/Sisyphe-Edge/exp1_SDES/assets/54466829/292a3e4b-b8ec-4a4e-afda-713669a7120a">
 
-- Data:
+#### Data:
   - plainText
   - cipherText
   - 
 
-- Function:
+#### Function:
   
 **EPBox**
 **SBox1**
