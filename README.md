@@ -4,7 +4,8 @@ The first experiment to implement S-DES algorithm.
 
 ## File Structure
 ### key scheduler
-![Uploading image.png…]()
+<img width="473" alt="image" src="https://github.com/Sisyphe-Edge/exp1_SDES/assets/54466829/c48d018b-fcad-41b9-8556-089b76e9b70b">
+
 
 ### S-DES scheduler
 
