@@ -4,7 +4,7 @@ The first experiment to implement S-DES algorithm.
 
 ## File Structure
 
-### Main
+### src.Main
 创建scheduler对象
 
 ### scheduler
