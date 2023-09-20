@@ -12,11 +12,11 @@ The first experiment to implement S-DES algorithm.
 - Inpput 
 - Output 
 #### Data
-  | DataName    | Type    | Description|
-  | ----------- | ------------ |---------------|
-  |plainText      | int[8]       |初始key值|
-  |cipherText   | int[8]       |输出的密文|
-|keyOriginal |int[10]|表示初始的key10-bit|  
+  | DataName    | Type     | Description    |
+  |----------|----------------|---------------|
+  |plainText      | char[8]  | 初始明文           |
+  |cipherText   | char[8]  | 输出的密文          |
+|keyOriginal | char[10] | 表示初始的key10-bit |  
   
 #### Function
 - getPlainText(){}
@@ -27,10 +27,10 @@ The first experiment to implement S-DES algorithm.
 
 #### Data:
 
-  | DataName    | Type  |Access  | Description|
-  | ----------- | ------------|------- |---------------|
-  | key[10]     | Boolean   | private   |初始key值|
-  | key[16][8]  | Boolean[16][16]   |public   |Ki表示每一轮的key值|
+  | DataName    | Type         |Access  | Description|
+  |--------------| ------------|------- |---------------|
+  | key[10]     | char         | private   |初始key值|
+  | key[16][8]  | cahr[16][16] |public   |Ki表示每一轮的key值|
 
 #### Function:
 **P10** P_{10}=(3,5,2,7,4,10,1,9,8,6)
@@ -46,20 +46,20 @@ The first experiment to implement S-DES algorithm.
 
 #### Data:
 
-  | DataName    | Type  | Access  | Description|
-  | ----------- | ------------|------- |---------------|
-  | plainTextBool     | Boolean[8]  |  private    |初始明文|
-  | cipherTextBool  | Boolean[8] | privaate     |最终密文|
-  | ciperT|Boolean [16][8] | private|每一轮的密文|
-    | Key10     | Boolean   | private   |初始key值|
- | Key[16][8]  | Boolean[16][16]   |public   |Ki表示每一轮的key值|
+| DataName    | Type         | Access  | Description  |
+  |--------------| ------------|--------------|---------------|
+| plainText | int (8-bit)  | private     | 初始明文int      |
+| ciperT         | char [16][8] | private| 每一轮的密文       |
+| Key[16][8]     | char[16][16] |public   | Ki表示每一轮的key值 |
 #### Function:
 
 **public setPlainText(int[])**
-**格式转换**
+
+*已删去--格式转换*
 	- intToBool(int[],bool[])
 	- boolToInt(int[], bool[])  
-**EPBox** 
+
+**EPBox**
 **SBox1**
 **SBox2**
 **SPBox**
