@@ -2,8 +2,9 @@ package src;
 
 public class S_DES {
     // public int plainText;
-    private char[] plainText;//初始明文
-    private String[] keys;//密钥串
+    private String plainText = new String();//初始明文
+    private String[] keys = new String[2];//密钥串
+    private String[] cipherText = new String[2];//每一轮的密纹串
     private static int[] IP = new int[] {2, 6, 3, 1, 4, 8, 5, 7};
     private static int[] nonIP = new int[] {4, 1, 3, 5, 7, 2, 8, 6};
     private static int[] EPBox = new int[] {4, 1, 2, 3, 2, 3, 4, 1};
@@ -18,23 +19,74 @@ public class S_DES {
             {"11", "00", "01", "10"},{"10", "01", "00", "11"}};
 
     //初始化函数时，为函数所需要的明文以及密钥赋值
-    public S_DES(char[] pText, char[][] keyT){
-//        plainText = new char[8];
-//        keys = new char[16][8];
-        plainText=pText;
-//        keys=keyT;
-/*        for(int i=0;i<16;i++){
-            System.out.print(keys[i]);
-        }
-        System.out.print(plainText);*/
+    //是的 在两个文件当中传递keys和明文 需要一部分牺牲换取模块的相对独立性
+    public S_DES(char[] pText, String[] keyT){
+        plainText = String.valueOf(pText);
+        keys = keyT;
+        Encrypt();
+        System.out.println(s);
+
     }
 
+    String s = new String();
+
+    private void Encrypt(){
+        String f1 = new String();
+        String f2 = new String();
+        String left = new String();
+        String right = new String();
+        String sw = new String();
+        //Step.1 IP
+        plainText = subtitueE(plainText, IP);
+        left = plainText.substring(0,4);
+        right = plainText.substring(4,8);
+//        System.out.println(left); //测试
+//        System.out.println(right);
+        //Step.2 fk
+        f1 = Fk(left,right, keys[0], 1);
+        xor(f1,right);
+        //Step.3 SW
+        sw = right;
+        right = left;
+        left = sw;
+        //Step.4 fk
+        f2 = Fk(left, right, keys[1], 2);
+        left = xor(left, f2);
+        plainText = left + right;
+        //Step.5 non-IP
+        plainText = subtitueE(plainText, nonIP);//此处可以替换为=subtitueE(plainText, nonIP)
+        s=plainText;
+        System.out.println("加密后的密文是"+s);
+    }
+
+
+    private String Fk(String left, String right, String key, int n){
+ /*       String ret=subtitueE(str, EPBox);
+        ret = xor(ret, key);
+        String ret1 = SBox(ret, 1);
+        String ret2 = SBox(ret, 2);
+        ret1 = subtitueE(ret1, SPBox);
+        return ret1;*/
+        right = subtitueE(right,EPBox);
+        right = xor(right,keys[0]);//8-bit
+        String ret = SBox(left,1)+SBox(right,2);
+        ret = subtitueE(ret,SPBox);
+        return ret;
+    }
+
+
+    //异或操作
     private static String xor(String str, String key){
         StringBuffer sb=new StringBuffer();
+       /* char []c=new char[]{};
+        c=str.toCharArray();
+        char []d=new char[]{};
+        c=str.toCharArray();
+        if (key=="1") return "1";*/
         for(int i=0;i<str.length();i++){
             if(str.charAt(i)==key.charAt(i))
-                sb.append(0);
-            else sb.append(1);
+                sb.append("0");
+            else sb.append("1");
         }
         return new String(sb);
     }
@@ -60,7 +112,7 @@ public class S_DES {
     }
 
 //    SPBox盒的查找，int n代表用哪一个盒处理
-    public static String SPBox(String str, int n){
+    public static String SBox(String str, int n){
         //行坐标
         StringBuffer sb =new StringBuffer();
         sb.append(str.charAt(0));
@@ -116,12 +168,5 @@ public class S_DES {
 //        return SPBox(a);
 //    }
 //
-//    private char[] Xor(char[] a, char[] b) {
-//        char[] result = new char[a.length];
-//        for (int i = 0; i < a.length; i++) {
-//            result[i] = (a[i] == b[i]) ? '0' : '1';
-//        }
-//        return result;
-//    }
-    
+
 }

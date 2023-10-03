@@ -1,15 +1,14 @@
 package src;
 
-public class Main(String[] args) {
-      
-        // 示例
-        char[] plaintext = "11010110".toCharArray();
-        char[][] keys = new char[16][8];
-        for (int i = 0; i < 16; i++) {
-            keys[i] = "10111011".toCharArray();  // 替换为实际密码
-        }
+public class Main{
+      public static void main(String[] args){
+          char[] a={'1','1','0','1','0','1','1','0','0','0'};
+          char[] p=new char[]{'1','1','0','1','0','1','1','0'};
+          keyScheduler key = new keyScheduler(a);
+          String[] b =new String[2];
+          b=key.getKeys();
+          S_DES sDes = new S_DES(p, b);
 
-        S_DES desScheduler = new S_DES(plaintext, keys);
-  
-    }
+      }
+
 } 
