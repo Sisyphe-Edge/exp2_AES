@@ -54,11 +54,11 @@ public class S_DES {
 
     private void SPBox(char[] a){
         char[] result = new char[4];
-        // Split the 8-bit input into two 4-bit parts
-        char[] left = Arrays.copyOfRange(input, 0, 4);
-        char[] right = Arrays.copyOfRange(input, 4, 8);
+        //将8bit的输入变成两个4bit长度的部分
+        char[] left = Arrays.copyOfRange(a, 0, 4);
+        char[] right = Arrays.copyOfRange(a, 4, 8);
 
-        // Perform S-box substitution for S0 and S1
+        //对 S0 和 S1 执行 S 框替换
         int s0Row = Integer.parseInt("" + left[0] + left[3], 2);
         int s0Col = Integer.parseInt("" + left[1] + left[2], 2);
         int s1Row = Integer.parseInt("" + right[0] + right[3], 2);
@@ -67,14 +67,14 @@ public class S_DES {
         int s0Output = S0[s0Row][s0Col];
         int s1Output = S1[s1Row][s1Col];
 
-        // Convert S-box outputs to binary strings
+        // 将 S 盒输出转换为二进制字符串
         String s0OutputBinary = String.format("%2s", Integer.toBinaryString(s0Output)).replace(' ', '0');
         String s1OutputBinary = String.format("%2s", Integer.toBinaryString(s1Output)).replace(' ', '0');
 
-        // Concatenate the S-box outputs
+        // 连接 S 盒输出
         String spResult = s0OutputBinary + s1OutputBinary;
 
-        // Convert the result to a character array
+        // 将结果转换为字符数组
         for (int i = 0; i < 4; i++) {
             result[i] = spResult.charAt(i);
         }
@@ -97,19 +97,5 @@ public class S_DES {
         }
         return result;
     }
-
-    public static void main(String[] args) {
-        
-        // Example usage
-        char[] plaintext = "11010110".toCharArray();
-        char[][] keys = new char[16][8];
-        for (int i = 0; i < 16; i++) {
-            keys[i] = "10111011".toCharArray();  // Replace with your actual key values
-        }
-
-        S_DES desScheduler = new S_DES(plaintext, keys);
-
-    }
-
-
+    
 }
