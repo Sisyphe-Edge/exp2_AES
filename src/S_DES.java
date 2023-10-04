@@ -66,7 +66,9 @@ public class S_DES {
         String ret1 = SBox(ret, 1);
         String ret2 = SBox(ret, 2);
         ret1 = subtitueE(ret1, SPBox);
-        return ret1;*/
+        return ret1;
+       //错误原因：SBox理解错误
+        */
         right = subtitueE(right,EPBox);
         right = xor(right,keys[0]);//8-bit
         String ret = SBox(left,1)+SBox(right,2);
