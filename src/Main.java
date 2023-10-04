@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 
 public class Main{
     private JLabel title;
-    private JLabel ciphertextD;
     private JLabel cipher2;
     private JLabel plain;
     private JTextField cipherD;
@@ -25,11 +24,10 @@ public class Main{
     private JLabel decrypt;
     private JLabel encrypt;
     private JLabel ciphertext;
-    private JLabel pleaseInputPlaintextLabel;
     private JLabel pleaseInput10BitLabel;
     private JPanel panel;
-    private JLabel l6;
     private JLabel l7;
+    private JLabel plainD;
 
     public String plaintxtE = new String(); //用户输入明文
 
@@ -47,10 +45,9 @@ public class Main{
                 plaintxtE = plaintextE.getText();
                 System.out.println("明文是："+plaintxtE);
                 keytxtE = keyE.getText();
-                System.out.println("10-bit Key = "+plaintxtE);
-                char[] p=new char[]{'1','1','0','1','0','1','1','0'};
+                System.out.println("10-bit Key = "+keytxtE);
                 keyScheduler key = new keyScheduler(keytxtE);
-                S_DES sDes = new S_DES(plaintxtE, key.getKeys());
+                S_DES sDes = new S_DES(plaintxtE, key.getKeys(), 1);
                 cipherE.setText(sDes.getResultCipher());
             }
         });
@@ -58,16 +55,18 @@ public class Main{
             @Override
             public void actionPerformed(ActionEvent e) {
                 ciphertxtD = cipherD.getText();
+                System.out.println("密文是："+ciphertxtD);
                 keytxtD = keyD.getText();
+                System.out.println("10-bit Key = "+keytxtD);
+                keyScheduler key = new keyScheduler(keytxtD);
+                S_DES Des = new S_DES(ciphertxtD, key.getKeys(), 2);
+                cipherD.setText(Des.getResultPlain());
+                plainD.setText(Des.getResultPlain());
             }
         });
     }
 
     public static void main(String[] args) {
-
-
-
-
 
         Main main = new Main();
         JFrame frame = new JFrame("Main");
