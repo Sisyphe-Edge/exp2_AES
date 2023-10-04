@@ -1,10 +1,10 @@
 package src;
 
+//加密调用encrypt(); 解密调用Decrypt();
 public class S_DES {
-    // public int plainText;
     private String plainText = new String();//初始明文
+    private String cipherText = new String();//初始密文
     private String[] keys = new String[2];//密钥串
-    private String[] cipherText = new String[2];//每一轮的密纹串
     private static int[] IP = new int[] {2, 6, 3, 1, 4, 8, 5, 7};
     private static int[] nonIP = new int[] {4, 1, 3, 5, 7, 2, 8, 6};
     private static int[] EPBox = new int[] {4, 1, 2, 3, 2, 3, 4, 1};
@@ -19,11 +19,18 @@ public class S_DES {
             {"11", "00", "01", "10"},{"10", "01", "00", "11"}};
 
     //初始化函数时，为函数所需要的明文以及密钥赋值
-    //是的 在两个文件当中传递keys和明文 需要一部分牺牲换取模块的相对独立性
-    public S_DES(String pText, String[] keyT){
-        plainText = pText;
+    //是的 在两个文件当中传递keys和明文 需要一部分牺牲换取模块的相对独立性 int n代表加密还是解密
+    public S_DES(String Text, String[] keyT, int n){
+
         keys = keyT;
-        Encrypt();
+        if(n==1){
+            plainText = Text;
+            Encrypt();
+        }
+        else {
+            cipherText = Text;
+            Decrypt();
+        }
 
     }
 
@@ -43,17 +50,15 @@ public class S_DES {
         plainText = subtitueE(plainText, IP);
         left = plainText.substring(0,4);
         right = plainText.substring(4,8);
-//        System.out.println(left); //测试
-//        System.out.println(right);
         //Step.2 fk
-        f1 = Fk(left,right, keys[0], 1);
-        xor(f1,right);
+        f1 = Fk(right,1);
+        left = xor(f1,left);
         //Step.3 SW
         sw = right;
         right = left;
         left = sw;
         //Step.4 fk
-        f2 = Fk(left, right, keys[1], 2);
+        f2 = Fk(right, 2);
         left = xor(left, f2);
         plainText = left + right;
         //Step.5 non-IP
@@ -62,8 +67,40 @@ public class S_DES {
         System.out.println("加密后的密文是:"+resultCipher);
     }
 
+    public String getResultPlain() {
+        return resultPlain;
+    }
 
-    private String Fk(String left, String right, String key, int n){
+    String resultPlain = new String();
+
+    private void Decrypt(){
+        String f1 = new String();
+        String f2 = new String();
+        String left = new String();
+        String right = new String();
+        String sw = new String();
+        //Step.1 IP
+        cipherText = subtitueE(cipherText, IP);
+        left = cipherText.substring(0,4);
+        right = cipherText.substring(4,8);
+        //Step.2 fk2
+        f1 = DFk(right, 2);
+        left = xor(left,f1);
+        //Step.3 SW
+        sw = right;
+        right = left;
+        left = sw;
+        //Step.4 fk
+        f2 = DFk(right, 1);
+        left = xor(left, f2);
+        resultPlain = left + right;
+        //Step.5 non-IP
+        resultPlain = subtitueE(resultPlain, nonIP);//此处可以替换为=subtitueE(plainText, nonIP)
+        System.out.println("解密后的明文是:"+resultPlain);
+    }
+
+
+    private String Fk(String str, int n){
  /*       String ret=subtitueE(str, EPBox);
         ret = xor(ret, key);
         String ret1 = SBox(ret, 1);
@@ -72,13 +109,31 @@ public class S_DES {
         return ret1;
        //错误原因：SBox理解错误
         */
-        right = subtitueE(right,EPBox);
-        right = xor(right,keys[0]);//8-bit
+        str = subtitueE(str,EPBox);
+        if(n==1)
+            str = xor(str,keys[0]);//8-bit
+        else str = xor(str,keys[1]);//8-bit
+//        System.out.println(str);
+        String left = new String();
+        left=str.substring(0,4);
+        String right = new String();
+        right=str.substring(4,8);
         String ret = SBox(left,1)+SBox(right,2);
         ret = subtitueE(ret,SPBox);
         return ret;
     }
 
+    private String DFk(String str, int n){
+        str = subtitueE(str,EPBox);
+        if(n==1)
+            str = xor(str,keys[0]);//8-bit
+        else str = xor(str,keys[1]);//8-bit
+        String left = cipherText.substring(0,4);
+        String right = cipherText.substring(4,8);
+        String ret = SBox(left,1)+SBox(right,2);
+        ret = subtitueE(ret,SPBox);
+        return ret;
+    }
 
     //异或操作
     private static String xor(String str, String key){
@@ -149,29 +204,5 @@ public class S_DES {
         S_DES desScheduler=new S_DES(a,keyT);
     }*/
 
-//    private void IPBox(char[] a){
-//        char[] result = new char[8];
-//         for (int i = 0; i < 8; i++) {
-//            result[i] = a[IP[i] - 1];
-//        }
-//        return result;
-//    }
-//
-//    private void nonIPBox(char[] a){
-//        char[] result = new char[8];
-//        for (int i = 0; i < 8; i++) {
-//            result[i] = a[IP[i] - 1];
-//        }
-//        return result;
-//    }
-//
-//    private char[] SBox1(char[] a) {
-//        return SPBox(a);
-//    }
-//
-//    private char[] SBox2(char[] a) {
-//        return SPBox(a);
-//    }
-//
 
 }

@@ -3,10 +3,10 @@ package src;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.regex.Pattern;
 
 public class Main{
     private JLabel title;
-    private JLabel ciphertextD;
     private JLabel cipher2;
     private JLabel plain;
     private JTextField cipherD;
@@ -25,11 +25,12 @@ public class Main{
     private JLabel decrypt;
     private JLabel encrypt;
     private JLabel ciphertext;
-    private JLabel pleaseInputPlaintextLabel;
     private JLabel pleaseInput10BitLabel;
     private JPanel panel;
-    private JLabel l6;
     private JLabel l7;
+    private JLabel plainD;
+    private JTextArea cipherTextShow;
+    private JTextArea plainTextShow;
 
     public String plaintxtE = new String(); //用户输入明文
 
@@ -41,39 +42,73 @@ public class Main{
 
 
     public Main() {
+        cipherTextShow.setEditable(false);
+        plainTextShow.setEditable(false);
         EE.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 plaintxtE = plaintextE.getText();
                 System.out.println("明文是："+plaintxtE);
                 keytxtE = keyE.getText();
-                System.out.println("10-bit Key = "+plaintxtE);
-                char[] p=new char[]{'1','1','0','1','0','1','1','0'};
+                System.out.println("10-bit Key = "+keytxtE);
                 keyScheduler key = new keyScheduler(keytxtE);
-                S_DES sDes = new S_DES(plaintxtE, key.getKeys());
-                cipherE.setText(sDes.getResultCipher());
+                //如果是0/1字符串的话
+                if(formatCheck(plaintxtE)){
+                    S_DES sDes = new S_DES(plaintxtE, key.getKeys(), 1);
+                    cipherTextShow.setText(sDes.getResultCipher());
+                }
+                //如果是其他字符串组成的
+                else{
+                    plaintxtChar = plaintxtE.toCharArray();
+                    String[] in=new String[plaintxtChar.length];
+                    String[] c=new String[plaintxtChar.length];//输出String串
+                    for(int i=0;i<plaintxtChar.length;i++){
+                        in[i]=formatTransform(plaintxtChar[i]);
+                        System.out.println(in[i]);
+                    }
+                    for(int i=0;i<plaintxtChar.length;i++){
+                        S_DES sDes = new S_DES(in[i], key.getKeys(), 1);
+                        c[i]=sDes.getResultCipher();
+                        cipherTextShow.append(c[i]+"\r\n");
+                    }
+                }
             }
         });
         DE.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ciphertxtD = cipherD.getText();
+                System.out.println("密文是："+ciphertxtD);
                 keytxtD = keyD.getText();
+                System.out.println("10-bit Key = "+keytxtD);
+                keyScheduler key = new keyScheduler(keytxtD);
+                S_DES Des = new S_DES(ciphertxtD, key.getKeys(), 2);
+                plainD.setText(Des.getResultPlain());
             }
         });
     }
 
     public static void main(String[] args) {
-
-
-
-
-
         Main main = new Main();
         JFrame frame = new JFrame("Main");
         frame.setContentPane(main.panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+
+    }
+
+    char[] plaintxtChar;
+    char[] ciphertxtChar;
+    public static boolean formatCheck(String str){
+        Pattern pattern = Pattern.compile("[0-1]*");
+        return  pattern.matcher(str).matches();
+    }
+    public String formatTransform(char c){
+        StringBuffer sb=new StringBuffer();
+        int value = Integer.valueOf(c);
+        sb.append("0");
+        sb.append(Integer.toString(value&255,2));
+        return new String(sb);
     }
 }
