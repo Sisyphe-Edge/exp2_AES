@@ -15,8 +15,8 @@ public class keyScheduler {
 
 
     //构造函数 获得初始密钥，并且调度函数计算密钥串
-    public keyScheduler(char[] a){
-        plainKey = String.valueOf(a);
+    public keyScheduler(String a){
+        plainKey = a;
         plainKey = subtitueE(plainKey,P10);
         //左右两部分分别进行移位操作的存储值
         String left = new String();
@@ -36,6 +36,7 @@ public class keyScheduler {
             result = left+right;
             keys[i]=subtitueE(result,P8);
         }
+        System.out.println("key1 = "+keys[0]+"  key2 = "+keys[1]);
     }
 
     //返回密钥串

@@ -20,15 +20,18 @@ public class S_DES {
 
     //初始化函数时，为函数所需要的明文以及密钥赋值
     //是的 在两个文件当中传递keys和明文 需要一部分牺牲换取模块的相对独立性
-    public S_DES(char[] pText, String[] keyT){
-        plainText = String.valueOf(pText);
+    public S_DES(String pText, String[] keyT){
+        plainText = pText;
         keys = keyT;
         Encrypt();
-        System.out.println(s);
 
     }
 
-    String s = new String();
+    public String getResultCipher() {
+        return resultCipher;
+    }
+
+    String resultCipher = new String();
 
     private void Encrypt(){
         String f1 = new String();
@@ -55,8 +58,8 @@ public class S_DES {
         plainText = left + right;
         //Step.5 non-IP
         plainText = subtitueE(plainText, nonIP);//此处可以替换为=subtitueE(plainText, nonIP)
-        s=plainText;
-        System.out.println("加密后的密文是"+s);
+        resultCipher=plainText;
+        System.out.println("加密后的密文是:"+resultCipher);
     }
 
 
