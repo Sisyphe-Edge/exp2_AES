@@ -3,7 +3,10 @@ package src;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Pattern;
+
 
 public class Main{
     private JLabel title;
@@ -115,13 +118,13 @@ public class Main{
 
     public static void main(String[] args) {
         Main main = new Main();
-//        JFrame frame = new JFrame("Main");
-//        frame.setContentPane(main.panel);
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.pack();
-//        frame.setVisible(true);
-//        main.Exploit("11111111","00101011");
-        Exploit exploit = new Exploit("11111111","00101011");
+        JFrame frame = new JFrame("Main");
+        frame.setContentPane(main.panel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+        main.testExploit();
+
     }
 
     char[] plaintxtChar;
@@ -145,6 +148,41 @@ public class Main{
         return a;
     }
 
+    public void testExploit(){
+        long stime = System.currentTimeMillis();
+        Long timeStamp = System.currentTimeMillis();  //获取当前时间戳
+        SimpleDateFormat sdf1=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date begin = new Date(Long.parseLong(String.valueOf(timeStamp)));
+        String sd1 = sdf1.format(begin);      // 时间戳转换成时间
+        System.out.println("\r\n暴力破解开始时间：" + sd1+"\r\n");
 
+/*        //寻找一对明密文串，没有key与之对应
+        System.out.println("\r\n寻找一对明密文串，没有key与之对应：\r\n");
+        String str = new String();
+        for(int i=0;i<1024;i++){
+            str = String.format("%8s", Integer.toBinaryString(i)).replace(' ','0');
+            Exploit exploit = new Exploit(str,"00101011");
+        }*/
 
+        Exploit exploit = new Exploit("11111111","00101011");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date end = new Date(Long.parseLong(String.valueOf(timeStamp)));
+        String sd2 = sdf2.format(end);
+        System.out.println("\r\n"+"暴力破解结束时间：" + sd2 );
+        // 结束时间
+        long etime = System.currentTimeMillis();
+        // 计算执行时间
+        System.out.printf("执行时长：%d 毫秒.\r\n", (etime - stime));
+    }
+
+    public void closeBased(){
+                //寻找一对明密文串，没有key与之对应
+        System.out.println("\r\n寻找一对明密文串，没有key与之对应：\r\n");
+        String str = new String();
+        for(int i=0;i<1024;i++){
+            str = String.format("%8s", Integer.toBinaryString(i)).replace(' ','0');
+            Exploit exploit = new Exploit(str,"00101011");
+        }
+
+    }
 }
