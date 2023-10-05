@@ -84,14 +84,14 @@ public class S_DES {
         left = cipherText.substring(0,4);
         right = cipherText.substring(4,8);
         //Step.2 fk2
-        f1 = DFk(right, 2);
+        f1 = Fk(right, 2);
         left = xor(left,f1);
         //Step.3 SW
         sw = right;
         right = left;
         left = sw;
         //Step.4 fk
-        f2 = DFk(right, 1);
+        f2 = Fk(right, 1);
         left = xor(left, f2);
         resultPlain = left + right;
         //Step.5 non-IP

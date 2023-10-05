@@ -61,16 +61,19 @@ public class Main{
                 else{
                     plaintxtChar = plaintxtE.toCharArray();
                     String[] in=new String[plaintxtChar.length];
-                    String[] c=new String[plaintxtChar.length];//输出String串
+                    StringBuffer c=new StringBuffer();//输出String串
+                    //字符格式转换
                     for(int i=0;i<plaintxtChar.length;i++){
                         in[i]=formatTransform(plaintxtChar[i]);
                         System.out.println(in[i]);
                     }
                     for(int i=0;i<plaintxtChar.length;i++){
                         S_DES sDes = new S_DES(in[i], key.getKeys(), 1);
-                        c[i]=sDes.getResultCipher();
-                        cipherTextShow.append(c[i]+"\r\n");
+//                        c[i]=sDes.getResultCipher();
+                        System.out.println(sDes.getResultCipher());
+                        c.append(stringToChar(sDes.getResultCipher()));
                     }
+                    cipherTextShow.setText(new String(c));
                 }
             }
         });
@@ -82,8 +85,30 @@ public class Main{
                 keytxtD = keyD.getText();
                 System.out.println("10-bit Key = "+keytxtD);
                 keyScheduler key = new keyScheduler(keytxtD);
-                S_DES Des = new S_DES(ciphertxtD, key.getKeys(), 2);
-                plainD.setText(Des.getResultPlain());
+
+                //如果是0/1字符串的话
+                if(formatCheck(ciphertxtD)){
+                    S_DES Des = new S_DES(ciphertxtD, key.getKeys(), 2);
+                    plainTextShow.setText(Des.getResultPlain());
+                }
+                //如果是其他字符串组成的
+                else{
+                    ciphertxtChar = ciphertxtD.toCharArray();
+                    String[] in=new String[ciphertxtChar.length];
+                    StringBuffer c=new StringBuffer();//输出String串
+                    //字符格式转换
+                    for(int i=0;i<ciphertxtChar.length;i++){
+                        in[i]=formatTransform(ciphertxtChar[i]);
+                        System.out.println(in[i]);
+                    }
+                    for(int i=0;i<ciphertxtChar.length;i++){
+                        S_DES sDes = new S_DES(in[i], key.getKeys(), 2);
+                        System.out.println(sDes.getResultPlain());
+                        c.append(stringToChar(sDes.getResultPlain()));
+                    }
+                    plainTextShow.setText(new String(c));
+                }
+
             }
         });
     }
@@ -110,5 +135,12 @@ public class Main{
         sb.append("0");
         sb.append(Integer.toString(value&255,2));
         return new String(sb);
+    }
+    public char stringToChar(String str){
+        int i=Integer.parseInt(str,2);
+        System.out.println("输出字符的编码是："+i);
+        char a = (char) i;
+        System.out.println("输出字符是："+a);
+        return a;
     }
 }
