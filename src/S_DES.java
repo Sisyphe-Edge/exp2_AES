@@ -64,7 +64,7 @@ public class S_DES {
         //Step.5 non-IP
         plainText = subtitueE(plainText, nonIP);//此处可以替换为=subtitueE(plainText, nonIP)
         resultCipher=plainText;
-        System.out.println("加密后的密文是:"+resultCipher);
+//        System.out.println("加密后的密文是:"+resultCipher);
     }
 
     public String getResultPlain() {
@@ -96,7 +96,7 @@ public class S_DES {
         resultPlain = left + right;
         //Step.5 non-IP
         resultPlain = subtitueE(resultPlain, nonIP);//此处可以替换为=subtitueE(plainText, nonIP)
-        System.out.println("解密后的明文是:"+resultPlain);
+//        System.out.println("解密后的明文是:"+resultPlain);
     }
 
 

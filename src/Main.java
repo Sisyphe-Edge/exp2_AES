@@ -99,11 +99,11 @@ public class Main{
                     //字符格式转换
                     for(int i=0;i<ciphertxtChar.length;i++){
                         in[i]=formatTransform(ciphertxtChar[i]);
-                        System.out.println(in[i]);
+//                        System.out.println(in[i]);
                     }
                     for(int i=0;i<ciphertxtChar.length;i++){
                         S_DES sDes = new S_DES(in[i], key.getKeys(), 2);
-                        System.out.println(sDes.getResultPlain());
+//                        System.out.println(sDes.getResultPlain());
                         c.append(stringToChar(sDes.getResultPlain()));
                     }
                     plainTextShow.setText(new String(c));
@@ -115,12 +115,13 @@ public class Main{
 
     public static void main(String[] args) {
         Main main = new Main();
-        JFrame frame = new JFrame("Main");
-        frame.setContentPane(main.panel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-
+//        JFrame frame = new JFrame("Main");
+//        frame.setContentPane(main.panel);
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.pack();
+//        frame.setVisible(true);
+//        main.Exploit("11111111","00101011");
+        Exploit exploit = new Exploit("11111111","00101011");
     }
 
     char[] plaintxtChar;
@@ -143,4 +144,7 @@ public class Main{
         System.out.println("输出字符是："+a);
         return a;
     }
+
+
+
 }

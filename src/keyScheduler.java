@@ -36,7 +36,7 @@ public class keyScheduler {
             result = left+right;
             keys[i]=subtitueE(result,P8);
         }
-        System.out.println("key1 = "+keys[0]+"  key2 = "+keys[1]);
+//        System.out.println("key1 = "+keys[0]+"  key2 = "+keys[1]);
     }
 
     //返回密钥串
