@@ -16,10 +16,10 @@ In this project, we designed a structure to use S-DES encryption which holds 8-b
 
 ### **第1关：基本测试**
 
-   加密：输入8bit的明文和10bit的密钥，输出是8bit的密文。
-   解密：：输入8bit的密文和10bit的密钥，输出是8bit的明文。
+   **加密**：输入8bit的明文和10bit的密钥，输出是8bit的密文。
+   **解密**：输入8bit的密文和10bit的密钥，输出是8bit的明文。
 
-![](D:\JAVA\exp1_SDES\image\8-bitBinary.png)
+![8-bitBinary.png](image%2F8-bitBinary.png)
 
 
 
@@ -35,7 +35,7 @@ In this project, we designed a structure to use S-DES encryption which holds 8-b
    **解密**：输入n-byte的密文和n-byte的密钥，输出是n-byte的明文。
 
 
-![](D:\JAVA\exp1_SDES\image\chanllenge3.png)
+![chanllenge3.png](image%2Fchanllenge3.png)
 
 
 
@@ -43,21 +43,21 @@ In this project, we designed a structure to use S-DES encryption which holds 8-b
 
    **使用多线程暴力破解相同密钥的明文和密文对。**
 
-![](D:\JAVA\exp1_SDES\image\1.gif)
+![1.gif](image%2F1.gif)
 
-
-#### 用例测试：
 
    **暴力破解成功**
 
-![](D:\JAVA\exp1_SDES\image\exploit.png)
+![exploit.png](image%2Fexploit.png)
 
 
    **暴力破解失败**
    
-![](D:\JAVA\exp1_SDES\image\exploitSuc.png)
+![exploitD.png](image%2FexploitD.png)
 
-![](D:\JAVA\exp1_SDES\image\exploitD.png)
+
+![exploitSuc.png](image%2FexploitSuc.png)
+
 
 
 
@@ -65,11 +65,14 @@ In this project, we designed a structure to use S-DES encryption which holds 8-b
 
 #### 设计代码，随机输入一对明密文对，出现不止一个密钥。
 
-![](D:\JAVA\exp1_SDES\image\2.gif)
+![2.gif](image%2F2.gif)
+
 
 #### 测试如下：
 
-![](D:\JAVA\exp1_SDES\image\chanllenge5.png)
+![chanllenge5.png](image%2Fchanllenge5.png)
+
+
 
 ## Users' Manual
 
@@ -89,7 +92,7 @@ In this project, we designed a structure to use S-DES encryption which holds 8-b
 
     1. 点击“confirm”后在“PlainText”中出现生成的原文。
 
-以下图为例：
-![](D:\JAVA\exp1_SDES\image\8-bitBinary.png)
+![8-bitBinary.png](image%2F8-bitBinary.png)
+
 
 ### author: Yiming Yan, Xiangyu Ran. CQU.
