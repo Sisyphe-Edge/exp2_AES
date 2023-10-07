@@ -9,6 +9,8 @@ In this project, we designed a structure to use S-DES encryption which holds 8-b
 - Exploit.java: This class is used to test brute force cracking
 - Main.java: Main class. Scheduling tests and the running of various UI modules, monitoring user operations
 - Main.form: a format sheet
+![export.png](image%2Fexport.png)
+
 
 
 ## Examination
@@ -24,6 +26,9 @@ In this project, we designed a structure to use S-DES encryption which holds 8-b
 
 
 ### **第2关：交叉测试**
+
+   **与其他小组交叉测试-- 输出相同，测试成功**
+   ![test.png](image%2Ftest.png)
 
 
 
