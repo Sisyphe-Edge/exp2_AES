@@ -1,7 +1,6 @@
 package src;
 
-//加密调用encrypt(); 解密调用Decrypt();
-public class S_DES {
+public class AES {
     private String plainText = new String();//初始明文
     private String cipherText = new String();//初始密文
     private String[] keys = new String[2];//密钥串
@@ -20,7 +19,7 @@ public class S_DES {
 
     //初始化函数时，为函数所需要的明文以及密钥赋值
     //是的 在两个文件当中传递keys和明文 需要一部分牺牲换取模块的相对独立性 int n代表加密还是解密
-    public S_DES(String Text, String[] keyT, int n){
+    public AES(String Text, String[] keyT, int n){
 
         keys = keyT;
         if(n==1){
@@ -171,7 +170,7 @@ public class S_DES {
         return new String(c);
     }
 
-//    SPBox盒的查找，int n代表用哪一个盒处理
+    //    SPBox盒的查找，int n代表用哪一个盒处理
     public static String SBox(String str, int n){
         //行坐标
         StringBuffer sb =new StringBuffer();
@@ -193,16 +192,4 @@ public class S_DES {
 
         return result;
     }
-
-/*    public static void main(String[] args) {
-        System.out.println("Hello, World!");
-        char[] a=new char[] {'1','0','1','1','1','0','1','1'};
-        char[][] keyT=new char[16][8];
-        for(int i=0;i<16;i++){
-            keyT[i]=new char[] {'1','0','1','1','1','0','1','1'};
-        }
-        S_DES desScheduler=new S_DES(a,keyT);
-    }*/
-
-
 }

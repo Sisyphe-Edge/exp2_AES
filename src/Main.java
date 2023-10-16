@@ -57,8 +57,8 @@ public class Main{
                 keyScheduler key = new keyScheduler(keytxtE);
                 //如果是0/1字符串的话
                 if(formatCheck(plaintxtE)){
-                    S_DES sDes = new S_DES(plaintxtE, key.getKeys(), 1);
-                    cipherTextShow.setText(sDes.getResultCipher());
+//                    S_DES sDes = new S_DES(plaintxtE, key.getKeys(), 1);
+//                    cipherTextShow.setText(sDes.getResultCipher());
                 }
                 //如果是其他字符串组成的
                 else{
@@ -71,10 +71,10 @@ public class Main{
                         System.out.println(in[i]);
                     }
                     for(int i=0;i<plaintxtChar.length;i++){
-                        S_DES sDes = new S_DES(in[i], key.getKeys(), 1);
+//                        S_DES sDes = new S_DES(in[i], key.getKeys(), 1);
 //                        c[i]=sDes.getResultCipher();
-                        System.out.println(sDes.getResultCipher());
-                        c.append(stringToChar(sDes.getResultCipher()));
+//                        System.out.println(sDes.getResultCipher());
+//                        c.append(stringToChar(sDes.getResultCipher()));
                     }
                     cipherTextShow.setText(new String(c));
                 }
@@ -91,8 +91,8 @@ public class Main{
 
                 //如果是0/1字符串的话
                 if(formatCheck(ciphertxtD)){
-                    S_DES Des = new S_DES(ciphertxtD, key.getKeys(), 2);
-                    plainTextShow.setText(Des.getResultPlain());
+//                    S_DES Des = new S_DES(ciphertxtD, key.getKeys(), 2);
+//                    plainTextShow.setText(Des.getResultPlain());
                 }
                 //如果是其他字符串组成的
                 else{
@@ -105,9 +105,9 @@ public class Main{
 //                        System.out.println(in[i]);
                     }
                     for(int i=0;i<ciphertxtChar.length;i++){
-                        S_DES sDes = new S_DES(in[i], key.getKeys(), 2);
+//                        S_DES sDes = new S_DES(in[i], key.getKeys(), 2);
 //                        System.out.println(sDes.getResultPlain());
-                        c.append(stringToChar(sDes.getResultPlain()));
+//                        c.append(stringToChar(sDes.getResultPlain()));
                     }
                     plainTextShow.setText(new String(c));
                 }
@@ -155,14 +155,6 @@ public class Main{
         Date begin = new Date(Long.parseLong(String.valueOf(timeStamp)));
         String sd1 = sdf1.format(begin);      // 时间戳转换成时间
         System.out.println("\r\n暴力破解开始时间：" + sd1+"\r\n");
-
-/*        //寻找一对明密文串，没有key与之对应
-        System.out.println("\r\n寻找一对明密文串，没有key与之对应：\r\n");
-        String str = new String();
-        for(int i=0;i<1024;i++){
-            str = String.format("%8s", Integer.toBinaryString(i)).replace(' ','0');
-            Exploit exploit = new Exploit(str,"00101011");
-        }*/
 
         Exploit exploit = new Exploit("11111111","00101011");
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
