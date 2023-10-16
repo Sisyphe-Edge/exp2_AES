@@ -116,16 +116,16 @@ public class Main{
         });
     }
 
-    public static void main(String[] args) {
-        Main main = new Main();
-        JFrame frame = new JFrame("Main");
-        frame.setContentPane(main.panel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-//        main.testExploit();
-
-    }
+//    public static void main(String[] args) {
+//        Main main = new Main();
+//        JFrame frame = new JFrame("Main");
+//        frame.setContentPane(main.panel);
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.pack();
+//        frame.setVisible(true);
+////        main.testExploit();
+//
+//    }
 
     char[] plaintxtChar;
     char[] ciphertxtChar;
