@@ -94,8 +94,6 @@ public class keyScheduler {
         sb.append(sb2);
         sb.append(s);
 
-        System.out.println("67:"+new String(sb));
-        System.out.println("67:"+xor(new String(sb),RCON1));
         if(n==1)
             return xor(new String(sb),RCON1);
         return xor(new String(sb), RCON2);
