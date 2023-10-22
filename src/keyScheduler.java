@@ -5,8 +5,9 @@ import java.util.Arrays;
 public class keyScheduler {
 
     private String plainKey;//主密钥16-bit
-    public String[] keys = new String[6];//密钥串 6 * 8-bit
+    private String[] keys = new String[6];//密钥串 6 * 8-bit
 
+    private String[] resultKey = new String[3];
     private int[][] SBox = new int[][]{{9,4,10,11},{13,1,8,5},{6,2,0,3},{12,14,15,7}};
     private int[][] nonSBox = new int[][]{{10,5,9,11},{1,7,8,15},{6,0,2,3},{12,4,13,14}};
 
@@ -46,7 +47,11 @@ public class keyScheduler {
 
     //返回密钥串
     public String[] getKeys(){
-        return keys;
+        for(int i=0;i<3;i++){
+            resultKey[i]=keys[2*i]+keys[2*i+1];
+        }
+        return resultKey;
+
     }
 
     String RCON1 = new String("10000000");
@@ -126,7 +131,7 @@ public class keyScheduler {
     }
 
     //测试代码
-      public static void main(String[] args) {
+/*      public static void main(String[] args) {
 
           String a = new String("0010110101010101");
           keyScheduler b = new keyScheduler(a);
@@ -135,6 +140,6 @@ public class keyScheduler {
           for (int i = 0; i < 6; i++) {
               System.out.println("w"+i+":"+s[i]);
           }
-      }
+      }*/
     //移位操作
 }
