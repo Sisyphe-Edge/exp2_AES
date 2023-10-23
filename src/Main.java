@@ -53,15 +53,16 @@ public class Main{
                 plaintxtE = plaintextE.getText();
                 System.out.println("明文是："+plaintxtE);
                 keytxtE = keyE.getText();
-                System.out.println("10-bit Key = "+keytxtE);
+                System.out.println("16-bit Key = "+keytxtE);
                 keyScheduler key = new keyScheduler(keytxtE);
+
                 //如果是0/1字符串的话
-                if(formatCheck(plaintxtE)){
-//                    S_DES sDes = new S_DES(plaintxtE, key.getKeys(), 1);
-//                    cipherTextShow.setText(sDes.getResultCipher());
-                }
+
+                AES aes = new AES(plaintxtE, key.getKeys(),1);
+                cipherTextShow.setText(aes.getResultCipher());
+
                 //如果是其他字符串组成的
-                else{
+               /* else{
                     plaintxtChar = plaintxtE.toCharArray();
                     String[] in=new String[plaintxtChar.length];
                     StringBuffer c=new StringBuffer();//输出String串
@@ -77,7 +78,7 @@ public class Main{
 //                        c.append(stringToChar(sDes.getResultCipher()));
                     }
                     cipherTextShow.setText(new String(c));
-                }
+                }*/
             }
         });
         DE.addActionListener(new ActionListener() {
@@ -90,12 +91,12 @@ public class Main{
                 keyScheduler key = new keyScheduler(keytxtD);
 
                 //如果是0/1字符串的话
-                if(formatCheck(ciphertxtD)){
+
 //                    S_DES Des = new S_DES(ciphertxtD, key.getKeys(), 2);
 //                    plainTextShow.setText(Des.getResultPlain());
-                }
-                //如果是其他字符串组成的
-                else{
+
+                              //如果是其他字符串组成的
+               /* else{
                     ciphertxtChar = ciphertxtD.toCharArray();
                     String[] in=new String[ciphertxtChar.length];
                     StringBuffer c=new StringBuffer();//输出String串
@@ -110,24 +111,23 @@ public class Main{
 //                        c.append(stringToChar(sDes.getResultPlain()));
                     }
                     plainTextShow.setText(new String(c));
-                }
-
+                }*/
             }
         });
     }
 
-//    public static void main(String[] args) {
-//        Main main = new Main();
-//        JFrame frame = new JFrame("Main");
-//        frame.setContentPane(main.panel);
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.pack();
-//        frame.setVisible(true);
-////        main.testExploit();
-//
-//    }
+    public static void main(String[] args) {
+        Main main = new Main();
+        JFrame frame = new JFrame("Main");
+        frame.setContentPane(main.panel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+//        main.testExploit();
 
-    char[] plaintxtChar;
+    }
+
+/*    char[] plaintxtChar;
     char[] ciphertxtChar;
     public static boolean formatCheck(String str){
         Pattern pattern = Pattern.compile("[0-1]*");
@@ -146,7 +146,7 @@ public class Main{
         char a = (char) i;
         System.out.println("输出字符是："+a);
         return a;
-    }
+    }*/
 
     public void testExploit(){
         long stime = System.currentTimeMillis();

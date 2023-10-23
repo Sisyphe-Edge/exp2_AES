@@ -18,6 +18,9 @@ public class AES {
     //是的 在两个文件当中传递keys和明文 需要一部分牺牲换取模块的相对独立性 int n代表加密还是解密
     public AES(String Text, String[] keyT, int n){
         keys = keyT;
+        for(int i=0;i<keys.length;i++){
+            System.out.println("key"+i+" = "+keys[i]);
+        }
         if(n==1){
             plainText = Text;
             Encrypt();
@@ -32,31 +35,7 @@ public class AES {
 
         return resultCipher;
     }
-    // 将int[][]转换为一个二进制的String
-    public String intToBinaryString(){
-        StringBuffer sb = new StringBuffer();
-        for (int i=0;i<2;i++){
-            for (int j=0;j<2;j++)
-                 sb.append(Integer.toBinaryString(cipher[j][i]));
-        }
-        return new String(sb);
-    }
 
-    //将String转换为十进制的int[][]
-    public int[][] StringToDecimalInt(String str){
-        int k=0;
-        String s = new String();
-        int [][] a = new int[2][2];
-        for (int i=0;i<2;i++){
-            for (int j=0;j<2;j++)
-            {
-                s = str.substring(k, k+4);
-                a[j][i] = Integer.parseInt(s, 2);
-                k += 4;
-            }
-        }
-        return a;
-    }
 
     // n = ? 代表调用哪一个密钥
     private void AKn(int n){
@@ -114,30 +93,39 @@ public class AES {
         cipher = StringToDecimalInt(plainText);
         //AK0
         AKn(0);
-
+        resultCipher = intToBinaryString();
+        System.out.println("AK0: "+resultCipher);
         //NS
         NS();
-
+        resultCipher = intToBinaryString();
+        System.out.println("NS: "+resultCipher);
         //SR
         SR();
-
+        resultCipher = intToBinaryString();
+        System.out.println("SR: "+resultCipher);
         // MC
         MC();
-
+        resultCipher = intToBinaryString();
+        System.out.println("MC: "+resultCipher);
         //AK1
         AKn(1);
-
+        resultCipher = intToBinaryString();
+        System.out.println("AK1："+resultCipher);
         // NS
         NS();
-
+        resultCipher = intToBinaryString();
+        System.out.println("NS: "+resultCipher);
         // SR
         SR();
-
+        resultCipher = intToBinaryString();
+        System.out.println("SR: "+resultCipher);
         // Ak2
         AKn(2);
-
+        resultCipher = intToBinaryString();
+        System.out.println("AK2: "+resultCipher);
         // S 输出16位密文
         resultCipher = intToBinaryString();
+        System.out.println("s: "+resultCipher);
     }
 
     public String getResultPlain() {
@@ -150,6 +138,41 @@ public class AES {
 
     }
 
+    // 将int[][]转换为一个二进制的String
+    public String intToBinaryString(){
+        StringBuffer sb = new StringBuffer();
+        String s = new String();
+        int l=0;
+        for (int i=0;i<2;i++){
+            for (int j=0;j<2;j++) {
+                l=0;
+                s = Integer.toBinaryString(cipher[j][i]);
+                l = s.length();
+                while (l<4){
+                    sb.append("0");
+                    l++;
+                }
+                sb.append(s);
+            }
+        }
+        return new String(sb);
+    }
+
+    //将String转换为十进制的int[][]
+    public int[][] StringToDecimalInt(String str){
+        int k=0;
+        String s = new String();
+        int [][] a = new int[2][2];
+        for (int i=0;i<2;i++){
+            for (int j=0;j<2;j++)
+            {
+                s = str.substring(k, k+4);
+                a[j][i] = Integer.parseInt(s, 2);
+                k += 4;
+            }
+        }
+        return a;
+    }
 
     // 二进制数转换为十进制
     public int two_bit_binaryToDec(String str){
@@ -177,12 +200,12 @@ public class AES {
         return new String(sb);
     }
 
-    public static void main(String[] args) {
-        String[] k = new String[]{"0010110101010101", "1011110011101001", "1010001101001010"};
-        String s = new String();
-        s = "1010"+"0111"+"0100"+"1001";
-        AES aes = new AES(s,k,1);
-        System.out.println(aes.getResultCipher());
-    }
+//    public static void main(String[] args) {
+//        String[] k = new String[]{"0010110101010101", "1011110011101001", "1010001101001010"};
+//        String s = new String();
+//        s = "1010"+"0111"+"0100"+"1001";
+//        AES aes = new AES(s,k,1);
+//        System.out.println(aes.getResultCipher());
+//    }
 
 }

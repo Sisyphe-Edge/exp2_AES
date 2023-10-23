@@ -48,7 +48,7 @@
             </constraints>
             <properties>
               <font name="Book Antiqua" size="22"/>
-              <text value="please input 10-bit Key:"/>
+              <text value="please input 16-bit Key:"/>
             </properties>
           </component>
           <component id="bd809" class="javax.swing.JTextField" binding="keyD">
@@ -78,7 +78,7 @@
             </constraints>
             <properties>
               <font name="Book Antiqua" size="22"/>
-              <text value="please input ciphertext:"/>
+              <text value="please input 16-bit ciphertext:"/>
             </properties>
           </component>
           <component id="c7179" class="javax.swing.JLabel" binding="l7">
@@ -142,7 +142,7 @@
             </constraints>
             <properties>
               <font name="Book Antiqua" size="22"/>
-              <text value="please input 10-bit Key："/>
+              <text value="please input 16-bit Key："/>
             </properties>
           </component>
           <component id="e5d8" class="javax.swing.JTextField" binding="plaintextE">
@@ -196,7 +196,7 @@
             </constraints>
             <properties>
               <font name="Book Antiqua" size="22"/>
-              <text value="please input ciphertext:"/>
+              <text value="please input 16-bit plaintext:"/>
             </properties>
           </component>
           <component id="b6744" class="javax.swing.JTextArea" binding="cipherTextShow">

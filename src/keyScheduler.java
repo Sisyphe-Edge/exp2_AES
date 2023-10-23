@@ -20,26 +20,25 @@ public class keyScheduler {
         int n=1;
         for(int i=2;i<4;i++){
             if(i%2 == 0){
-                System.out.println(keys[i-1]);
                 keys[i] = xor(G(keys[i-1],n),keys[i-2]);
-                System.out.println("xor str1:"+G(keys[i-1],n)+"str2:"+keys[i-2]);
+//                System.out.println("xor str1:"+G(keys[i-1],n)+"str2:"+keys[i-2]);
             }
             else {
                 keys[i] = xor(keys[i-2],keys[i-1]);
-                System.out.println("xor str1:"+keys[i-2]+"str2:"+keys[i-1]);
+//                System.out.println("xor str1:"+keys[i-2]+"str2:"+keys[i-1]);
 
             }
         }
         n++;
         for(int i=4;i<6;i++){
             if(i%2 == 0){
-                System.out.println(keys[i-1]);
+//                System.out.println(keys[i-1]);
                 keys[i] = xor(G(keys[i-1],n),keys[i-2]);
-                System.out.println("xor str1:"+G(keys[i-1],n)+"str2:"+keys[i-2]);
+//                System.out.println("xor str1:"+G(keys[i-1],n)+"str2:"+keys[i-2]);
             }
             else {
                 keys[i] = xor(keys[i-2],keys[i-1]);
-                System.out.println("xor str1:"+keys[i-2]+"str2:"+keys[i-1]);
+//                System.out.println("xor str1:"+keys[i-2]+"str2:"+keys[i-1]);
 
             }
         }
@@ -51,7 +50,6 @@ public class keyScheduler {
             resultKey[i]=keys[2*i]+keys[2*i+1];
         }
         return resultKey;
-
     }
 
     String RCON1 = new String("10000000");
