@@ -9,8 +9,8 @@ public class keyScheduler {
 
     private String[] resultKey = new String[3];
     private int[][] SBox = new int[][]{{9,4,10,11},{13,1,8,5},{6,2,0,3},{12,14,15,7}};
-    private int[][] nonSBox = new int[][]{{10,5,9,11},{1,7,8,15},{6,0,2,3},{12,4,13,14}};
 
+    private GF2_4 gf24 = new GF2_4();
 
     //构造函数 获得初始密钥，并且调度函数计算密钥串
     public keyScheduler(String a){

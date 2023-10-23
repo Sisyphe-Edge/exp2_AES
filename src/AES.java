@@ -3,11 +3,14 @@ package src;
 public class AES {
     private String plainText = new String();//初始明文 16-bit
     private String cipherText = new String();//初始密文
-
     private String[] keys = new String[3];//密钥串
     private int[][] SBox = new int[][]{{9,4,10,11},{13,1,8,5},{6,2,0,3},{12,14,15,7}};
     private int[][] nonSBox = new int[][]{{10,5,9,11},{1,7,8,15},{6,0,2,3},{12,4,13,14}};
     private int[][] cipher = new int[2][2];//明文分解为2*2的十进制位数
+    public static int[][] mc = new int[][]{{1,4}, {4,1}};
+    private static int[][] nonmc = new int[][]{{9,2}, {2,9}};
+
+    private GF2_4 gf24 = new GF2_4();
 
     //
 
@@ -90,6 +93,19 @@ public class AES {
         cipher[1][0] = n;
     }
 
+    public void MC(){
+        int[][] res = new int[][]{{0,0},{0,0}};
+        int a = 0;
+        int b=0;
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 2; j++) {
+                a = gf24.multiplyGF2_4(mc[i][0], cipher[0][j]);
+                b = gf24.multiplyGF2_4(mc[i][1], cipher[1][j]);
+                res[i][j] = a ^ b;
+            }
+        }
+        cipher = res;
+    }
 
     String resultCipher = new String();
 
@@ -106,6 +122,7 @@ public class AES {
         SR();
 
         // MC
+        MC();
 
         //AK1
         AKn(1);
@@ -119,7 +136,8 @@ public class AES {
         // Ak2
         AKn(2);
 
-        // S
+        // S 输出16位密文
+        resultCipher = intToBinaryString();
     }
 
     public String getResultPlain() {
@@ -159,5 +177,12 @@ public class AES {
         return new String(sb);
     }
 
+    public static void main(String[] args) {
+        String[] k = new String[]{"0010110101010101", "1011110011101001", "1010001101001010"};
+        String s = new String();
+        s = "1010"+"0111"+"0100"+"1001";
+        AES aes = new AES(s,k,1);
+        System.out.println(aes.getResultCipher());
+    }
 
 }
