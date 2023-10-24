@@ -55,10 +55,12 @@ public class Main{
                 keytxtE = keyE.getText();
                 System.out.println("16-bit Key = "+keytxtE);
                 keyScheduler key = new keyScheduler(keytxtE);
-                AES aes = new AES(plaintxtE, key.getKeys(),1);
-                cipherTextShow.setText(aes.getResultCipher());
+                if(formatCheck(plaintxtE)){
+                    AES aes = new AES(plaintxtE, key.getKeys(),1);
+                    cipherTextShow.setText(aes.getResultCipher());
+                }
                 //如果是其他字符串组成的
-               /* else{
+                else{
                     plaintxtChar = plaintxtE.toCharArray();
                     String[] in=new String[plaintxtChar.length];
                     StringBuffer c=new StringBuffer();//输出String串
@@ -67,14 +69,14 @@ public class Main{
                         in[i]=formatTransform(plaintxtChar[i]);
                         System.out.println(in[i]);
                     }
-                    for(int i=0;i<plaintxtChar.length;i++){
-//                        S_DES sDes = new S_DES(in[i], key.getKeys(), 1);
-//                        c[i]=sDes.getResultCipher();
-//                        System.out.println(sDes.getResultCipher());
-//                        c.append(stringToChar(sDes.getResultCipher()));
+                    for(int i=0;i<ciphertxtChar.length;i+=2){
+                        AES aes = new AES(in[i]+in[i+1],key.getKeys(),1);
+//                        System.out.println(sDes.getResultPlain());
+                        c.append(stringToChar(aes.getResultPlain()));
                     }
+
                     cipherTextShow.setText(new String(c));
-                }*/
+                }
             }
         });
         DE.addActionListener(new ActionListener() {
@@ -85,25 +87,27 @@ public class Main{
                 keytxtD = keyD.getText();
                 System.out.println("10-bit Key = "+keytxtD);
                 keyScheduler key = new keyScheduler(keytxtD);
-                AES aes = new AES(ciphertxtD, key.getKeys(),2);
-                plainTextShow.setText(aes.getResultPlain());
+                if(formatCheck(ciphertxtD)){
+                    AES aes = new AES(ciphertxtD, key.getKeys(),2);
+                    plainTextShow.setText(aes.getResultPlain());}
                 //如果是其他字符串组成的
-               /* else{
+                else{
                     ciphertxtChar = ciphertxtD.toCharArray();
                     String[] in=new String[ciphertxtChar.length];
+                    String s = new String();
                     StringBuffer c=new StringBuffer();//输出String串
                     //字符格式转换
                     for(int i=0;i<ciphertxtChar.length;i++){
                         in[i]=formatTransform(ciphertxtChar[i]);
 //                        System.out.println(in[i]);
                     }
-                    for(int i=0;i<ciphertxtChar.length;i++){
-//                        S_DES sDes = new S_DES(in[i], key.getKeys(), 2);
+                    for(int i=0;i<ciphertxtChar.length;i+=2){
+                        AES aes = new AES(in[i]+in[i+1],key.getKeys(),2);
 //                        System.out.println(sDes.getResultPlain());
-//                        c.append(stringToChar(sDes.getResultPlain()));
+                        c.append(stringToChar(aes.getResultPlain()));
                     }
                     plainTextShow.setText(new String(c));
-                }*/
+                }
             }
         });
     }
@@ -119,7 +123,7 @@ public class Main{
 
     }
 
-/*    char[] plaintxtChar;
+    char[] plaintxtChar;
     char[] ciphertxtChar;
     public static boolean formatCheck(String str){
         Pattern pattern = Pattern.compile("[0-1]*");
@@ -132,13 +136,17 @@ public class Main{
         sb.append(Integer.toString(value&255,2));
         return new String(sb);
     }
-    public char stringToChar(String str){
-        int i=Integer.parseInt(str,2);
-        System.out.println("输出字符的编码是："+i);
+    public String stringToChar(String str){ //此处resultplain输出是16bit
+        int i=Integer.parseInt(str.substring(0,8),2);
+        int j = Integer.parseInt(str.substring(8,16),2);
+        System.out.println("输出字符的编码是："+i+j);
         char a = (char) i;
-        System.out.println("输出字符是："+a);
-        return a;
-    }*/
+        char b = (char) j;
+        String s = new String();
+        s = String.valueOf(a)+ b;
+        System.out.println("输出字符是："+s);
+        return s;
+    }
 
     public void testExploit(){
         long stime = System.currentTimeMillis();
