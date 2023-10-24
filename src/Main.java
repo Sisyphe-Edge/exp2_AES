@@ -55,12 +55,8 @@ public class Main{
                 keytxtE = keyE.getText();
                 System.out.println("16-bit Key = "+keytxtE);
                 keyScheduler key = new keyScheduler(keytxtE);
-
-                //如果是0/1字符串的话
-
                 AES aes = new AES(plaintxtE, key.getKeys(),1);
                 cipherTextShow.setText(aes.getResultCipher());
-
                 //如果是其他字符串组成的
                /* else{
                     plaintxtChar = plaintxtE.toCharArray();
@@ -89,13 +85,9 @@ public class Main{
                 keytxtD = keyD.getText();
                 System.out.println("10-bit Key = "+keytxtD);
                 keyScheduler key = new keyScheduler(keytxtD);
-
-                //如果是0/1字符串的话
-
-//                    S_DES Des = new S_DES(ciphertxtD, key.getKeys(), 2);
-//                    plainTextShow.setText(Des.getResultPlain());
-
-                              //如果是其他字符串组成的
+                AES aes = new AES(ciphertxtD, key.getKeys(),2);
+                plainTextShow.setText(aes.getResultPlain());
+                //如果是其他字符串组成的
                /* else{
                     ciphertxtChar = ciphertxtD.toCharArray();
                     String[] in=new String[ciphertxtChar.length];

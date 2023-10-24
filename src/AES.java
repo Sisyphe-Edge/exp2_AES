@@ -7,6 +7,8 @@ public class AES {
     private int[][] SBox = new int[][]{{9,4,10,11},{13,1,8,5},{6,2,0,3},{12,14,15,7}};
     private int[][] nonSBox = new int[][]{{10,5,9,11},{1,7,8,15},{6,0,2,3},{12,4,13,14}};
     private int[][] cipher = new int[2][2];//明文分解为2*2的十进制位数
+    private int[][] plain = new int[2][2];//明文分解为2*2的十进制位数
+
     public static int[][] mc = new int[][]{{1,4}, {4,1}};
     private static int[][] nonmc = new int[][]{{9,2}, {2,9}};
 
@@ -65,11 +67,34 @@ public class AES {
         }
     }
 
+    private void INS(){
+        String s = new String();
+        int left, right;
+        for(int i=0;i<2;i++){
+            for (int j=0;j<2;j++){
+                s = Integer.toBinaryString(plain[i][j]); //十进制数变换为String，需要补全为4bit
+                while (s.length()<4){
+                    s = "0" + s;
+                }
+                left = two_bit_binaryToDec(s.substring(0,2));
+                right = two_bit_binaryToDec(s.substring(2,4));
+                plain[i][j] = nonSBox[left][right];
+            }
+        }
+    }
+
     private void SR(){
         int n;
         n = cipher[1][1];
         cipher[1][1] = cipher[1][0];
         cipher[1][0] = n;
+    }
+
+    private void ISR(){
+        int n;
+        n = plain[1][1];
+        plain[1][1] = plain[1][0];
+        plain[1][0] = n;
     }
 
     public void MC(){
@@ -84,6 +109,20 @@ public class AES {
             }
         }
         cipher = res;
+    }
+
+    public void IMC(){
+        int[][] res = new int[][]{{0,0},{0,0}};
+        int a = 0;
+        int b=0;
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 2; j++) {
+                a = gf24.multiplyGF2_4(nonmc[i][0], plain[0][j]);
+                b = gf24.multiplyGF2_4(nonmc[i][1], plain[1][j]);
+                res[i][j] = a ^ b;
+            }
+        }
+        plain = res;
     }
 
     String resultCipher = new String();
@@ -135,7 +174,26 @@ public class AES {
     String resultPlain = new String();
 
     private void Decrypt(){
-
+        // S
+        plain = StringToDecimalInt(cipherText);
+        //AK2
+        AKn(2);
+        // INS
+        INS();
+        // ISR
+        ISR();
+        // AK1
+        AKn(1);
+        // IMC
+        IMC();
+        // INS
+        INS();
+        // ISR
+        ISR();
+        // AK0
+        AKn(0);
+        // S
+        resultPlain = intToBinaryString();
     }
 
     // 将int[][]转换为一个二进制的String
