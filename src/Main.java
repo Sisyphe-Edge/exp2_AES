@@ -3,6 +3,7 @@ package src;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Pattern;
@@ -242,11 +243,12 @@ public class Main{
 
     public static void main(String[] args) {
         Main main = new Main();
-        JFrame frame = new JFrame("Main");
-        frame.setContentPane(main.panel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
+//        JFrame frame = new JFrame("Main");
+//        frame.setContentPane(main.panel);
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.pack();
+//        frame.setVisible(true);
+        main.meet_in_the_middle("1010101010101010","1100001110101111");
 //        main.testExploit();
 
     }
@@ -303,6 +305,45 @@ public class Main{
             str = String.format("%8s", Integer.toBinaryString(i)).replace(' ','0');
             Exploit exploit = new Exploit(str,"00101011");
         }
+    }
 
+    public void meet_in_the_middle(String plain, String cipher){
+        String[] afterkey1 = new String[65535];
+        String[] afterkey2 = new String[65535];
+        String s = new String();
+        String k = new String();
+        for(int i=0;i<65536;i++){
+            k = int2_16bitString(i);
+            keyScheduler key = new keyScheduler(k);
+            AES aes = new AES(plain,key.getKeys(),1);
+            afterkey1[i] = aes.getResultCipher();
+        }
+        for (int j=0;j<65536;j++){
+            k = int2_16bitString(j);
+            keyScheduler key = new keyScheduler(k);
+            AES aes = new AES(cipher,key.getKeys(),2);
+            afterkey2[j] = aes.getResultPlain();
+        }
+        for (int z=0; z< 65536; z++){
+            for (int x=0;x<65536;x++){
+                if(afterkey1[z] == afterkey2[x]) {
+                    System.out.println("key1 = "+int2_16bitString(z)+"  key2 = "+int2_16bitString(x));
+                }
+            }
+        }
+    }
+
+    public String int2_16bitString(int n){
+        String str = new String();
+        StringBuffer sb = new StringBuffer();
+        str = Integer.toBinaryString(n);
+        int l = str.length();
+        while (l<16){
+            l++;
+            sb.append(0);
+        }
+        sb.append(str);
+        System.out.println(new String(sb).length());
+        return new String(sb);
     }
 }
