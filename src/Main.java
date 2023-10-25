@@ -54,29 +54,97 @@ public class Main{
                 System.out.println("明文是："+plaintxtE);
                 keytxtE = keyE.getText();
                 System.out.println("16-bit Key = "+keytxtE);
-                keyScheduler key = new keyScheduler(keytxtE);
-                if(formatCheck(plaintxtE)){
-                    AES aes = new AES(plaintxtE, key.getKeys(),1);
-                    cipherTextShow.setText(aes.getResultCipher());
-                }
-                //如果是其他字符串组成的
-                else{
-                    plaintxtChar = plaintxtE.toCharArray();
-                    String[] in=new String[plaintxtChar.length];
-                    StringBuffer c=new StringBuffer();//输出String串
-                    //字符格式转换
-                    for(int i=0;i<plaintxtChar.length;i++){
-                        in[i]=formatTransform(plaintxtChar[i]);
-                        System.out.println(in[i]);
+                // 16-bit key
+                if(keytxtE.length()==16){
+                    keyScheduler key = new keyScheduler(keytxtE);
+                    // 如果是01字符串
+                    if(formatCheck(plaintxtE)){
+                        AES aes = new AES(plaintxtE, key.getKeys(),1);
+                        cipherTextShow.setText(aes.getResultCipher());
                     }
-                    for(int i=0;i<ciphertxtChar.length;i+=2){
-                        AES aes = new AES(in[i]+in[i+1],key.getKeys(),1);
+                    //如果是其他字符串组成的
+                    else{
+                        plaintxtChar = plaintxtE.toCharArray();
+                        String[] in=new String[plaintxtChar.length];
+                        StringBuffer c=new StringBuffer();//输出String串
+                        //字符格式转换
+                        for(int i=0;i<plaintxtChar.length;i++){
+                            in[i]=formatTransform(plaintxtChar[i]);
+                            System.out.println(in[i]);
+                        }
+                        for(int i=0;i<ciphertxtChar.length;i+=2){
+                            AES aes = new AES(in[i]+in[i+1],key.getKeys(),1);
 //                        System.out.println(sDes.getResultPlain());
-                        c.append(stringToChar(aes.getResultPlain()));
-                    }
+                            c.append(stringToChar(aes.getResultPlain()));
+                        }
 
-                    cipherTextShow.setText(new String(c));
+                        cipherTextShow.setText(new String(c));
+                    }
                 }
+                // 32-bit key
+                else if(keytxtE.length()==32){
+                    keyScheduler key1 = new keyScheduler(keytxtE.substring(0,16));
+                    keyScheduler key2 = new keyScheduler(keytxtE.substring(16,32));
+
+                    // 如果是01字符串
+                    if(formatCheck(plaintxtE)){
+                        AES aes1 = new AES(plaintxtE, key1.getKeys(),1);
+                        AES aes2 = new AES(aes1.getResultCipher(), key1.getKeys(),1);
+                        cipherTextShow.setText(aes2.getResultCipher());
+                    }
+                    //如果是其他字符串组成的
+                    else{
+                        plaintxtChar = plaintxtE.toCharArray();
+                        String[] in=new String[plaintxtChar.length];
+                        StringBuffer c=new StringBuffer();//输出String串
+                        //字符格式转换
+                        for(int i=0;i<plaintxtChar.length;i++){
+                            in[i]=formatTransform(plaintxtChar[i]);
+                            System.out.println(in[i]);
+                        }
+                        for(int i=0;i<ciphertxtChar.length;i+=2){
+                            AES aes1 = new AES(in[i]+in[i+1],key1.getKeys(),1);
+                            AES aes2 = new AES(aes1.getResultCipher(), key1.getKeys(),1);
+                            cipherTextShow.setText(aes2.getResultCipher());
+                            c.append(stringToChar(aes2.getResultPlain()));
+                        }
+                        cipherTextShow.setText(new String(c));
+                    }
+                }
+                // 48-bit key
+                else if(keytxtE.length()==48){
+                    keyScheduler key1 = new keyScheduler(keytxtE.substring(0,16));
+                    keyScheduler key2 = new keyScheduler(keytxtE.substring(16,32));
+                    keyScheduler key3 = new keyScheduler(keytxtE.substring(32,48));
+                    // 如果是01字符串
+                    if(formatCheck(plaintxtE)){
+                        AES aes1 = new AES(plaintxtE, key1.getKeys(),1);
+                        AES aes2 = new AES(aes1.getResultCipher(), key2.getKeys(),1);
+                        AES aes3 = new AES(aes2.getResultCipher(), key3.getKeys(),1);
+                        cipherTextShow.setText(aes3.getResultCipher());
+                    }
+                    //如果是其他字符串组成的
+                    else{
+                        plaintxtChar = plaintxtE.toCharArray();
+                        String[] in=new String[plaintxtChar.length];
+                        StringBuffer c=new StringBuffer();//输出String串
+                        //字符格式转换
+                        for(int i=0;i<plaintxtChar.length;i++){
+                            in[i]=formatTransform(plaintxtChar[i]);
+                            System.out.println(in[i]);
+                        }
+                        for(int i=0;i<ciphertxtChar.length;i+=2){
+                            AES aes1 = new AES(in[i]+in[i+1],key1.getKeys(),1);
+                            AES aes2 = new AES(aes1.getResultCipher(),key2.getKeys(),1);
+                            AES aes3 = new AES(aes2.getResultCipher(), key3.getKeys(),1);
+//                        System.out.println(sDes.getResultPlain());
+                            c.append(stringToChar(aes3.getResultPlain()));
+                        }
+
+                        cipherTextShow.setText(new String(c));
+                    }
+                }
+
             }
         });
         DE.addActionListener(new ActionListener() {
@@ -86,28 +154,88 @@ public class Main{
                 System.out.println("密文是："+ciphertxtD);
                 keytxtD = keyD.getText();
                 System.out.println("10-bit Key = "+keytxtD);
-                keyScheduler key = new keyScheduler(keytxtD);
-                if(formatCheck(ciphertxtD)){
-                    AES aes = new AES(ciphertxtD, key.getKeys(),2);
-                    plainTextShow.setText(aes.getResultPlain());}
-                //如果是其他字符串组成的
-                else{
-                    ciphertxtChar = ciphertxtD.toCharArray();
-                    String[] in=new String[ciphertxtChar.length];
-                    String s = new String();
-                    StringBuffer c=new StringBuffer();//输出String串
-                    //字符格式转换
-                    for(int i=0;i<ciphertxtChar.length;i++){
-                        in[i]=formatTransform(ciphertxtChar[i]);
+                if(keytxtD.length() ==16){
+                    keyScheduler key = new keyScheduler(keytxtD);
+                    if(formatCheck(ciphertxtD)){
+                        AES aes = new AES(ciphertxtD, key.getKeys(),2);
+                        plainTextShow.setText(aes.getResultPlain());}
+                    //如果是其他字符串组成的
+                    else{
+                        ciphertxtChar = ciphertxtD.toCharArray();
+                        String[] in=new String[ciphertxtChar.length];
+                        String s = new String();
+                        StringBuffer c=new StringBuffer();//输出String串
+                        //字符格式转换
+                        for(int i=0;i<ciphertxtChar.length;i++){
+                            in[i]=formatTransform(ciphertxtChar[i]);
 //                        System.out.println(in[i]);
-                    }
-                    for(int i=0;i<ciphertxtChar.length;i+=2){
-                        AES aes = new AES(in[i]+in[i+1],key.getKeys(),2);
+                        }
+                        for(int i=0;i<ciphertxtChar.length;i+=2){
+                            AES aes = new AES(in[i]+in[i+1],key.getKeys(),2);
 //                        System.out.println(sDes.getResultPlain());
-                        c.append(stringToChar(aes.getResultPlain()));
+                            c.append(stringToChar(aes.getResultPlain()));
+                        }
+                        plainTextShow.setText(new String(c));
                     }
-                    plainTextShow.setText(new String(c));
                 }
+                else if(keytxtD.length() == 32){
+                    keyScheduler key1 = new keyScheduler(keytxtD.substring(0,16));
+                    keyScheduler key2 = new keyScheduler(keytxtD.substring(16,32));
+                    if(formatCheck(ciphertxtD)){
+                        AES aes1 = new AES(ciphertxtD, key2.getKeys(),2);
+                        AES aes2 = new AES(aes1.getResultPlain(), key1.getKeys(),2);
+                        plainTextShow.setText(aes2.getResultPlain());}
+                    //如果是其他字符串组成的
+                    else{
+                        ciphertxtChar = ciphertxtD.toCharArray();
+                        String[] in=new String[ciphertxtChar.length];
+                        String s = new String();
+                        StringBuffer c=new StringBuffer();//输出String串
+                        //字符格式转换
+                        for(int i=0;i<ciphertxtChar.length;i++){
+                            in[i]=formatTransform(ciphertxtChar[i]);
+//                        System.out.println(in[i]);
+                        }
+                        for(int i=0;i<ciphertxtChar.length;i+=2){
+                            AES aes1 = new AES(in[i]+in[i+1],key1.getKeys(),2);
+                            AES aes2 = new AES(aes1.getResultPlain(),key2.getKeys(),2);
+//                        System.out.println(sDes.getResultPlain());
+                            c.append(stringToChar(aes2.getResultPlain()));
+                        }
+                        plainTextShow.setText(new String(c));
+                    }
+                }
+                else if(keytxtD.length() == 48){
+                    keyScheduler key1 = new keyScheduler(keytxtD.substring(0,16));
+                    keyScheduler key2 = new keyScheduler(keytxtD.substring(16,32));
+                    keyScheduler key3 = new keyScheduler(keytxtD.substring(32,48));
+                    if(formatCheck(ciphertxtD)){
+                        AES aes1 = new AES(ciphertxtD, key3.getKeys(),2);
+                        AES aes2 = new AES(aes1.getResultPlain(), key2.getKeys(),2);
+                        AES aes3 = new AES(aes2.getResultPlain(), key1.getKeys(),2);
+                        plainTextShow.setText(aes3.getResultPlain());}
+                    //如果是其他字符串组成的
+                    else{
+                        ciphertxtChar = ciphertxtD.toCharArray();
+                        String[] in=new String[ciphertxtChar.length];
+                        String s = new String();
+                        StringBuffer c=new StringBuffer();//输出String串
+                        //字符格式转换
+                        for(int i=0;i<ciphertxtChar.length;i++){
+                            in[i]=formatTransform(ciphertxtChar[i]);
+//                        System.out.println(in[i]);
+                        }
+                        for(int i=0;i<ciphertxtChar.length;i+=2){
+                            AES aes1 = new AES(in[i]+in[i+1],key3.getKeys(),2);
+                            AES aes2 = new AES(aes1.getResultPlain(),key2.getKeys(),2);
+                            AES aes3 = new AES(aes2.getResultPlain(),key1.getKeys(),2);
+//                        System.out.println(sDes.getResultPlain());
+                            c.append(stringToChar(aes3.getResultPlain()));
+                        }
+                        plainTextShow.setText(new String(c));
+                    }
+                }
+
             }
         });
     }
