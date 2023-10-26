@@ -49,6 +49,16 @@ public class AES {
             }
         }
     }
+    private void nonAKn(int n){
+        int[][] a = StringToDecimalInt(keys[n]);
+        for (int i=0;i<2;i++){
+            for (int j=0;j<2;j++)
+            {
+                plain[i][j] ^= a[i][j];
+            }
+        }
+    }
+
 
     // 半字节替代
     private void NS(){
@@ -83,6 +93,7 @@ public class AES {
         }
     }
 
+    // 行移位
     private void SR(){
         int n;
         n = cipher[1][1];
@@ -130,19 +141,19 @@ public class AES {
     private void Encrypt(){
         // S
         cipher = StringToDecimalInt(plainText);
-        //AK0
+        //AK0 轮密钥加
         AKn(0);
         resultCipher = intToBinaryString();
         System.out.println("AK0: "+resultCipher);
-        //NS
+        //NS 半字节替代
         NS();
         resultCipher = intToBinaryString();
         System.out.println("NS: "+resultCipher);
-        //SR
+        //SR 行移位
         SR();
         resultCipher = intToBinaryString();
         System.out.println("SR: "+resultCipher);
-        // MC
+        // MC 列混淆
         MC();
         resultCipher = intToBinaryString();
         System.out.println("MC: "+resultCipher);
@@ -176,24 +187,44 @@ public class AES {
     private void Decrypt(){
         // S
         plain = StringToDecimalInt(cipherText);
+
         //AK2
-        AKn(2);
-        // INS
-        INS();
-        // ISR
+        nonAKn(2);
+        resultPlain = non_intToBinaryString();
+        System.out.println("nonAK2: "+resultPlain);
+
+        // ISR 逆行移位
         ISR();
+        resultPlain = non_intToBinaryString();
+        System.out.println("ISR: "+resultPlain);
+
+        // INS 逆半字节替代
+        INS();
+        resultPlain = non_intToBinaryString();
+        System.out.println("INS: "+resultPlain);
         // AK1
-        AKn(1);
-        // IMC
+        nonAKn(1);
+        resultPlain = non_intToBinaryString();
+        System.out.println("nonAK1: "+resultPlain);
+        // IMC 逆列混淆
         IMC();
-        // INS
-        INS();
-        // ISR
+        resultPlain = non_intToBinaryString();
+        System.out.println("IMC: "+resultPlain);
+        // ISR 逆行移位
         ISR();
+        resultPlain = non_intToBinaryString();
+        System.out.println("ISR: "+resultPlain);
+        // INS 逆半字节替代
+        INS();
+        resultPlain = non_intToBinaryString();
+        System.out.println("INS: "+resultPlain);
         // AK0
-        AKn(0);
+        nonAKn(0);
+        resultPlain = non_intToBinaryString();
+        System.out.println("nonAK0: "+resultPlain);
         // S
-        resultPlain = intToBinaryString();
+        resultPlain = non_intToBinaryString();
+        System.out.println(resultPlain);
     }
 
     // 将int[][]转换为一个二进制的String
@@ -205,6 +236,25 @@ public class AES {
             for (int j=0;j<2;j++) {
                 l=0;
                 s = Integer.toBinaryString(cipher[j][i]);
+                l = s.length();
+                while (l<4){
+                    sb.append("0");
+                    l++;
+                }
+                sb.append(s);
+            }
+        }
+        return new String(sb);
+    }
+
+    public String non_intToBinaryString(){
+        StringBuffer sb = new StringBuffer();
+        String s = new String();
+        int l=0;
+        for (int i=0;i<2;i++){
+            for (int j=0;j<2;j++) {
+                l=0;
+                s = Integer.toBinaryString(plain[j][i]);
                 l = s.length();
                 while (l<4){
                     sb.append("0");
