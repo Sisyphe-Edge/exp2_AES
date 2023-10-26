@@ -243,12 +243,12 @@ public class Main{
 
     public static void main(String[] args) {
         Main main = new Main();
-//        JFrame frame = new JFrame("Main");
-//        frame.setContentPane(main.panel);
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.pack();
-//        frame.setVisible(true);
-        main.meet_in_the_middle("1010101010101010","1100001110101111");
+        JFrame frame = new JFrame("Main");
+        frame.setContentPane(main.panel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+//        main.meet_in_the_middle("1010101010101010","1100001110101111");
 //        main.testExploit();
 
     }
