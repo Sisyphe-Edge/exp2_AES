@@ -48,20 +48,10 @@ public class Main{
 
 
     public Main() {
-        Random rand = new Random();
-        //初始化IV
-        int num = rand.nextInt(65536);
-        IV = int2_16bitString(num);
-
-        Scanner sc = new Scanner(System.in);
-        int n;
-        do{
-            System.out.println("\n请选择: 加密输入1，解密输入2，退出输入3");
-            n = sc.nextInt();
-            CBC(n);
-        }while(n!=3);
-
-
+//        Random rand = new Random();
+//        //初始化IV
+//        int num = rand.nextInt(65536);
+//        IV = int2_16bitString(num);
 
         cipherTextShow.setEditable(false);
         plainTextShow.setEditable(false);
@@ -265,7 +255,8 @@ public class Main{
 //        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //        frame.pack();
 //        frame.setVisible(true);
-//        main.meet_in_the_middle("1010101010101010","1100001110101111");
+//        main.CBCScheduler();
+        main.meet_in_the_middle("1010101010101010","1001111110011000");
 //        main.testExploit();
 
     }
@@ -327,22 +318,22 @@ public class Main{
     public void meet_in_the_middle(String plain, String cipher){
         String[] afterkey1 = new String[65535];
         String[] afterkey2 = new String[65535];
+        AES aes;
         String s = new String();
-        String k = new String();
-        for(int i=0;i<65536;i++){
-            k = int2_16bitString(i);
+        for(int i=0;i<655;i++){
+            String k = int2_16bitString(i);
             keyScheduler key = new keyScheduler(k);
-            AES aes = new AES(plain,key.getKeys(),1);
+           aes = new AES(plain,key.getKeys(),1);
             afterkey1[i] = aes.getResultCipher();
         }
-        for (int j=0;j<65536;j++){
-            k = int2_16bitString(j);
+        for (int j=0;j<655;j++){
+            String k = int2_16bitString(j);
             keyScheduler key = new keyScheduler(k);
-            AES aes = new AES(cipher,key.getKeys(),2);
+            aes = new AES(cipher,key.getKeys(),2);
             afterkey2[j] = aes.getResultPlain();
         }
-        for (int z=0; z< 65536; z++){
-            for (int x=0;x<65536;x++){
+        for (int z=0; z< 655; z++){
+            for (int x=0;x<655;x++){
                 if(afterkey1[z] == afterkey2[x]) {
                     System.out.println("key1 = "+int2_16bitString(z)+"  key2 = "+int2_16bitString(x));
                 }
@@ -356,7 +347,20 @@ public class Main{
     private String[] C = new String[3];
     private String[] DC = new String[3];
 
+
+    public void CBCScheduler(){
+        int n;
+        do{
+            Scanner sc = new Scanner(System.in);
+            System.out.println("\n请选择: 加密输入1，解密输入2，退出输入3");
+            n = sc.nextInt();
+            CBC(n);
+        }while(n!=3);
+        return;
+    }
+
     public void CBC(int n){
+
         String text = new String("3");
         String key = new String();
         String[] keys = new String[3];
@@ -448,7 +452,7 @@ public class Main{
             sb.append(0);
         }
         sb.append(str);
-        System.out.println(new String(sb).length());
+//        System.out.println(new String(sb).length());
         return new String(sb);
     }
 

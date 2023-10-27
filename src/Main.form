@@ -33,13 +33,13 @@
           <component id="827b2" class="javax.swing.JTextField" binding="cipherD">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <minimum-size width="230" height="32"/>
-                <preferred-size width="230" height="32"/>
-                <maximum-size width="230" height="32"/>
+                <minimum-size width="260" height="32"/>
+                <preferred-size width="260" height="32"/>
+                <maximum-size width="260" height="32"/>
               </grid>
             </constraints>
             <properties>
-              <font name="Consolas" size="18"/>
+              <font name="Consolas" size="14"/>
             </properties>
           </component>
           <component id="f0a29" class="javax.swing.JLabel" binding="key2InputField">
@@ -54,9 +54,9 @@
           <component id="bd809" class="javax.swing.JTextField" binding="keyD">
             <constraints>
               <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <minimum-size width="230" height="32"/>
-                <preferred-size width="230" height="32"/>
-                <maximum-size width="230" height="32"/>
+                <minimum-size width="260" height="32"/>
+                <preferred-size width="260" height="32"/>
+                <maximum-size width="260" height="32"/>
               </grid>
             </constraints>
             <properties>
@@ -148,21 +148,21 @@
           <component id="e5d8" class="javax.swing.JTextField" binding="plaintextE">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <minimum-size width="230" height="32"/>
-                <preferred-size width="230" height="32"/>
-                <maximum-size width="230" height="32"/>
+                <minimum-size width="260" height="32"/>
+                <preferred-size width="260" height="32"/>
+                <maximum-size width="260" height="32"/>
               </grid>
             </constraints>
             <properties>
-              <font name="Consolas" size="18"/>
+              <font name="Consolas" size="14"/>
             </properties>
           </component>
           <component id="b54ae" class="javax.swing.JTextField" binding="keyE">
             <constraints>
               <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <minimum-size width="230" height="32"/>
-                <preferred-size width="230" height="32"/>
-                <maximum-size width="230" height="32"/>
+                <minimum-size width="260" height="32"/>
+                <preferred-size width="260" height="32"/>
+                <maximum-size width="260" height="32"/>
               </grid>
             </constraints>
             <properties>
