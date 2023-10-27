@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
+import java.util.Scanner;
 import java.util.regex.Pattern;
 
 
@@ -46,6 +48,21 @@ public class Main{
 
 
     public Main() {
+        Random rand = new Random();
+        //初始化IV
+        int num = rand.nextInt(65536);
+        IV = int2_16bitString(num);
+
+        Scanner sc = new Scanner(System.in);
+        int n;
+        do{
+            System.out.println("\n请选择: 加密输入1，解密输入2，退出输入3");
+            n = sc.nextInt();
+            CBC(n);
+        }while(n!=3);
+
+
+
         cipherTextShow.setEditable(false);
         plainTextShow.setEditable(false);
         EE.addActionListener(new ActionListener() {
@@ -243,11 +260,11 @@ public class Main{
 
     public static void main(String[] args) {
         Main main = new Main();
-        JFrame frame = new JFrame("Main");
-        frame.setContentPane(main.panel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
+//        JFrame frame = new JFrame("Main");
+//        frame.setContentPane(main.panel);
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.pack();
+//        frame.setVisible(true);
 //        main.meet_in_the_middle("1010101010101010","1100001110101111");
 //        main.testExploit();
 
@@ -332,7 +349,95 @@ public class Main{
             }
         }
     }
+    private String IV = new String();
+    private String[] P = new String[3];
+    private String[] EP = new String[3];
 
+    private String[] C = new String[3];
+    private String[] DC = new String[3];
+
+    public void CBC(int n){
+        String text = new String("3");
+        String key = new String();
+        String[] keys = new String[3];
+
+        Scanner sc = new Scanner(System.in);
+        Scanner sc2 = new Scanner(System.in);
+
+        System.out.println("请输入密钥：");
+        key=sc.nextLine();
+
+
+        if(n==1){
+            System.out.println("请输入明文：");
+            text=sc.nextLine();
+        }
+        else if(n==2){
+            System.out.println("请输入密文：");
+            text=sc2.nextLine();
+        }
+        //获得密钥
+        keyScheduler ks = new keyScheduler(key);
+        keys = ks.getKeys();
+        AES aes;
+
+        int length = text.length();
+        int i;int j;
+
+            if(n==1){
+                i=0;j=0;
+                System.out.println("加密后的密文是：");
+                while (i<length){
+                    P[j]=text.substring(i,i+16);
+                    // S-AES加密
+                    aes = new AES(P[j], keys, 1);
+                    EP[j] = aes.getResultCipher();
+                    i+=16;j++;
+                }
+                for(int k=0;k<3;k++){
+                    if(k==0){
+                        EP[k] = xor(IV, EP[k]);
+                    }
+                    else
+                        EP[k] = xor(EP[k-1], EP[k]);
+                    System.out.print(EP[k]+" ");
+                }
+                System.out.println(" ");
+            }
+            else{
+                System.out.println("加密后的明文是：");
+                i=0;j=0;
+                while (i<length){
+                    C[j]=text.substring(i,i+16);
+                    i+=16;j++;
+                }
+                for(int k=2;k>=0;k--){
+                    if(k==0){
+                        DC[k] = xor(IV, C[k]);
+                    }
+                    else DC[k] = xor(C[k-1], C[k]);
+                    System.out.print(C[k]+" ");
+                }
+                while (i<length){
+                    aes = new AES(DC[j], keys, 2);
+                    DC[j] = aes.getResultPlain();
+                    i+=16;j++;
+                }
+                System.out.println(" ");
+
+            }
+
+    }
+
+    private static String xor(String str, String key){
+        StringBuffer sb=new StringBuffer();
+        for(int i=0;i<str.length();i++){
+            if(str.charAt(i)==key.charAt(i))
+                sb.append("0");
+            else sb.append("1");
+        }
+        return new String(sb);
+    }
     public String int2_16bitString(int n){
         String str = new String();
         StringBuffer sb = new StringBuffer();
@@ -346,4 +451,5 @@ public class Main{
         System.out.println(new String(sb).length());
         return new String(sb);
     }
+
 }

@@ -21,7 +21,7 @@ public class AES {
     public AES(String Text, String[] keyT, int n){
         keys = keyT;
         for(int i=0;i<keys.length;i++){
-            System.out.println("key"+i+" = "+keys[i]);
+            //System.out.println("key"+i+" = "+keys[i]);
         }
         if(n==1){
             plainText = Text;
@@ -144,38 +144,38 @@ public class AES {
         //AK0 轮密钥加
         AKn(0);
         resultCipher = intToBinaryString();
-        System.out.println("AK0: "+resultCipher);
+        //System.out.println("AK0: "+resultCipher);
         //NS 半字节替代
         NS();
         resultCipher = intToBinaryString();
-        System.out.println("NS: "+resultCipher);
+        //System.out.println("NS: "+resultCipher);
         //SR 行移位
         SR();
         resultCipher = intToBinaryString();
-        System.out.println("SR: "+resultCipher);
+        //System.out.println("SR: "+resultCipher);
         // MC 列混淆
         MC();
         resultCipher = intToBinaryString();
-        System.out.println("MC: "+resultCipher);
+        //System.out.println("MC: "+resultCipher);
         //AK1
         AKn(1);
         resultCipher = intToBinaryString();
-        System.out.println("AK1："+resultCipher);
+        //System.out.println("AK1："+resultCipher);
         // NS
         NS();
         resultCipher = intToBinaryString();
-        System.out.println("NS: "+resultCipher);
+        //System.out.println("NS: "+resultCipher);
         // SR
         SR();
         resultCipher = intToBinaryString();
-        System.out.println("SR: "+resultCipher);
+        //System.out.println("SR: "+resultCipher);
         // Ak2
         AKn(2);
         resultCipher = intToBinaryString();
-        System.out.println("AK2: "+resultCipher);
+        //System.out.println("AK2: "+resultCipher);
         // S 输出16位密文
         resultCipher = intToBinaryString();
-        System.out.println("s: "+resultCipher);
+        //System.out.println("s: "+resultCipher);
     }
 
     public String getResultPlain() {
@@ -191,40 +191,40 @@ public class AES {
         //AK2
         nonAKn(2);
         resultPlain = non_intToBinaryString();
-        System.out.println("nonAK2: "+resultPlain);
+        //System.out.println("nonAK2: "+resultPlain);
 
         // ISR 逆行移位
         ISR();
         resultPlain = non_intToBinaryString();
-        System.out.println("ISR: "+resultPlain);
+        //System.out.println("ISR: "+resultPlain);
 
         // INS 逆半字节替代
         INS();
         resultPlain = non_intToBinaryString();
-        System.out.println("INS: "+resultPlain);
+        //System.out.println("INS: "+resultPlain);
         // AK1
         nonAKn(1);
         resultPlain = non_intToBinaryString();
-        System.out.println("nonAK1: "+resultPlain);
+        //System.out.println("nonAK1: "+resultPlain);
         // IMC 逆列混淆
         IMC();
         resultPlain = non_intToBinaryString();
-        System.out.println("IMC: "+resultPlain);
+        //System.out.println("IMC: "+resultPlain);
         // ISR 逆行移位
         ISR();
         resultPlain = non_intToBinaryString();
-        System.out.println("ISR: "+resultPlain);
+        //System.out.println("ISR: "+resultPlain);
         // INS 逆半字节替代
         INS();
         resultPlain = non_intToBinaryString();
-        System.out.println("INS: "+resultPlain);
+        //System.out.println("INS: "+resultPlain);
         // AK0
         nonAKn(0);
         resultPlain = non_intToBinaryString();
-        System.out.println("nonAK0: "+resultPlain);
+        //System.out.println("nonAK0: "+resultPlain);
         // S
         resultPlain = non_intToBinaryString();
-        System.out.println(resultPlain);
+        //System.out.println(resultPlain);
     }
 
     // 将int[][]转换为一个二进制的String
@@ -298,22 +298,14 @@ public class AES {
     }
 
     //异或操作
-    private static String xor(String str, String key){
-        StringBuffer sb=new StringBuffer();
-        for(int i=0;i<str.length();i++){
-            if(str.charAt(i)==key.charAt(i))
-                sb.append("0");
-            else sb.append("1");
-        }
-        return new String(sb);
-    }
+
 
 //    public static void main(String[] args) {
 //        String[] k = new String[]{"0010110101010101", "1011110011101001", "1010001101001010"};
 //        String s = new String();
 //        s = "1010"+"0111"+"0100"+"1001";
 //        AES aes = new AES(s,k,1);
-//        System.out.println(aes.getResultCipher());
+//        //System.out.println(aes.getResultCipher());
 //    }
 
 }
