@@ -286,54 +286,25 @@ public class Main{
         return s;
     }
 
-    public void testExploit(){
-        long stime = System.currentTimeMillis();
-        Long timeStamp = System.currentTimeMillis();  //获取当前时间戳
-        SimpleDateFormat sdf1=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date begin = new Date(Long.parseLong(String.valueOf(timeStamp)));
-        String sd1 = sdf1.format(begin);      // 时间戳转换成时间
-        System.out.println("\r\n暴力破解开始时间：" + sd1+"\r\n");
-
-        Exploit exploit = new Exploit("11111111","00101011");
-        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date end = new Date(Long.parseLong(String.valueOf(timeStamp)));
-        String sd2 = sdf2.format(end);
-        System.out.println("\r\n"+"暴力破解结束时间：" + sd2 );
-        // 结束时间
-        long etime = System.currentTimeMillis();
-        // 计算执行时间
-        System.out.printf("执行时长：%d 毫秒.\r\n", (etime - stime));
-    }
-
-    public void closeBased(){
-                //寻找一对明密文串，没有key与之对应
-        System.out.println("\r\n寻找一对明密文串，没有key与之对应：\r\n");
-        String str = new String();
-        for(int i=0;i<1024;i++){
-            str = String.format("%8s", Integer.toBinaryString(i)).replace(' ','0');
-            Exploit exploit = new Exploit(str,"00101011");
-        }
-    }
 
     public void meet_in_the_middle(String plain, String cipher){
-        String[] afterkey1 = new String[65535];
-        String[] afterkey2 = new String[65535];
+        String[] afterkey1 = new String[6];
+        String[] afterkey2 = new String[6];
         AES aes;
-        String s = new String();
-        for(int i=0;i<655;i++){
+        for(int i=0;i<6;i++){
             String k = int2_16bitString(i);
             keyScheduler key = new keyScheduler(k);
            aes = new AES(plain,key.getKeys(),1);
             afterkey1[i] = aes.getResultCipher();
         }
-        for (int j=0;j<655;j++){
+        for (int j=0;j<6;j++){
             String k = int2_16bitString(j);
             keyScheduler key = new keyScheduler(k);
             aes = new AES(cipher,key.getKeys(),2);
             afterkey2[j] = aes.getResultPlain();
         }
-        for (int z=0; z< 655; z++){
-            for (int x=0;x<655;x++){
+        for (int z=0; z< 6; z++){
+            for (int x=0;x<6;x++){
                 if(afterkey1[z] == afterkey2[x]) {
                     System.out.println("key1 = "+int2_16bitString(z)+"  key2 = "+int2_16bitString(x));
                 }
