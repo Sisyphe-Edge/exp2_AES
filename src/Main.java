@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -72,6 +73,11 @@ public class Main{
                     }
                     //如果是其他字符串组成的
                     else{
+                        String[] k=new String[3];
+                        k=key.getKeys();
+                        System.out.println("0 "+k[0]+k[1].length());
+                        System.out.println("1 "+k[1]);
+                        System.out.println("2 "+k[2]);
                         plaintxtChar = plaintxtE.toCharArray();
                         String[] in=new String[plaintxtChar.length];
                         StringBuffer c=new StringBuffer();//输出String串
@@ -80,12 +86,17 @@ public class Main{
                             in[i]=formatTransform(plaintxtChar[i]);
                             System.out.println(in[i]);
                         }
-                        for(int i=0;i<ciphertxtChar.length;i+=2){
-                            AES aes = new AES(in[i]+in[i+1],key.getKeys(),1);
-//                        System.out.println(sDes.getResultPlain());
-                            c.append(stringToChar(aes.getResultPlain()));
-                        }
+                        StringBuffer sb = new StringBuffer();
+                        AES a;
+                        for(int i=0;i<plaintxtChar.length;i+=2){
+                            sb.append(in[i]);sb.append(in[i+1]);
+                            System.out.println("sb="+new String(sb).length());
 
+                            a = new AES(new String(sb),key.getKeys(),1);
+                            System.out.println("result+"+a.getResultCipher());
+                            c.append(stringToChar(a.getResultCipher()));
+                            sb.setLength(0);
+                        }
                         cipherTextShow.setText(new String(c));
                     }
                 }
@@ -101,23 +112,7 @@ public class Main{
                         cipherTextShow.setText(aes2.getResultCipher());
                     }
                     //如果是其他字符串组成的
-                    else{
-                        plaintxtChar = plaintxtE.toCharArray();
-                        String[] in=new String[plaintxtChar.length];
-                        StringBuffer c=new StringBuffer();//输出String串
-                        //字符格式转换
-                        for(int i=0;i<plaintxtChar.length;i++){
-                            in[i]=formatTransform(plaintxtChar[i]);
-                            System.out.println(in[i]);
-                        }
-                        for(int i=0;i<ciphertxtChar.length;i+=2){
-                            AES aes1 = new AES(in[i]+in[i+1],key1.getKeys(),1);
-                            AES aes2 = new AES(aes1.getResultCipher(), key1.getKeys(),1);
-                            cipherTextShow.setText(aes2.getResultCipher());
-                            c.append(stringToChar(aes2.getResultPlain()));
-                        }
-                        cipherTextShow.setText(new String(c));
-                    }
+
                 }
                 // 48-bit key
                 else if(keytxtE.length()==48){
@@ -223,25 +218,7 @@ public class Main{
                         AES aes3 = new AES(aes2.getResultPlain(), key1.getKeys(),2);
                         plainTextShow.setText(aes3.getResultPlain());}
                     //如果是其他字符串组成的
-                    else{
-                        ciphertxtChar = ciphertxtD.toCharArray();
-                        String[] in=new String[ciphertxtChar.length];
-                        String s = new String();
-                        StringBuffer c=new StringBuffer();//输出String串
-                        //字符格式转换
-                        for(int i=0;i<ciphertxtChar.length;i++){
-                            in[i]=formatTransform(ciphertxtChar[i]);
-//                        System.out.println(in[i]);
-                        }
-                        for(int i=0;i<ciphertxtChar.length;i+=2){
-                            AES aes1 = new AES(in[i]+in[i+1],key3.getKeys(),2);
-                            AES aes2 = new AES(aes1.getResultPlain(),key2.getKeys(),2);
-                            AES aes3 = new AES(aes2.getResultPlain(),key1.getKeys(),2);
-//                        System.out.println(sDes.getResultPlain());
-                            c.append(stringToChar(aes3.getResultPlain()));
-                        }
-                        plainTextShow.setText(new String(c));
-                    }
+
                 }
 
             }
@@ -250,13 +227,13 @@ public class Main{
 
     public static void main(String[] args) {
         Main main = new Main();
-//        JFrame frame = new JFrame("Main");
-//        frame.setContentPane(main.panel);
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.pack();
-//        frame.setVisible(true);
+        JFrame frame = new JFrame("Main");
+        frame.setContentPane(main.panel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
 //        main.CBCScheduler();
-        main.meet_in_the_middle("1010101010101010","1001111110011000");
+//        main.meet_in_the_middle("1010101010101010","1001111110011000");
 //        main.testExploit();
 
     }
@@ -275,41 +252,45 @@ public class Main{
         return new String(sb);
     }
     public String stringToChar(String str){ //此处resultplain输出是16bit
+        System.out.println("输出字符的编码是："+str.length());
         int i=Integer.parseInt(str.substring(0,8),2);
         int j = Integer.parseInt(str.substring(8,16),2);
         System.out.println("输出字符的编码是："+i+j);
         char a = (char) i;
         char b = (char) j;
         String s = new String();
-        s = String.valueOf(a)+ b;
-        System.out.println("输出字符是："+s);
-        return s;
+        StringBuffer sb = new StringBuffer();
+        sb.append(a);sb.append(b);
+
+        return new String(sb);
     }
 
 
     public void meet_in_the_middle(String plain, String cipher){
-        String[] afterkey1 = new String[6];
-        String[] afterkey2 = new String[6];
-        AES aes;
-        for(int i=0;i<6;i++){
+        System.out.println("\n\nPlaintext = "+plain+"  CipherText = "+cipher+"\n");
+        String[] afterkey1 = new String[65535];
+        String[] afterkey2 = new String[65535];
+        AES aes1;
+        AES aes2;
+        for(int i=0;i<65535;i++){
             String k = int2_16bitString(i);
             keyScheduler key = new keyScheduler(k);
-           aes = new AES(plain,key.getKeys(),1);
-            afterkey1[i] = aes.getResultCipher();
+            aes1 = new AES(plain,key.getKeys(),1);
+            aes2 = new AES(cipher,key.getKeys(),2);
+            afterkey1[i] = aes1.getResultCipher();
+            afterkey2[i] = aes2.getResultPlain();
         }
-        for (int j=0;j<6;j++){
-            String k = int2_16bitString(j);
-            keyScheduler key = new keyScheduler(k);
-            aes = new AES(cipher,key.getKeys(),2);
-            afterkey2[j] = aes.getResultPlain();
-        }
-        for (int z=0; z< 6; z++){
-            for (int x=0;x<6;x++){
-                if(afterkey1[z] == afterkey2[x]) {
+        int flag =0;
+        for (int z=0; z< 65535; z++){
+            for (int x=0;x<65535;x++){
+                if(afterkey1[z].equals(afterkey2[x])) {
                     System.out.println("key1 = "+int2_16bitString(z)+"  key2 = "+int2_16bitString(x));
+                    flag++;
                 }
             }
         }
+        if(flag==0) System.out.println("\n中间相遇攻击未找到符合条件的密钥");
+        else  System.out.println("\n一共有 "+flag+" 对密钥满足条件");
     }
     private String IV = new String();
     private String[] P = new String[3];
@@ -329,6 +310,7 @@ public class Main{
         }while(n!=3);
         return;
     }
+
 
     public void CBC(int n){
 
@@ -403,7 +385,6 @@ public class Main{
             }
 
     }
-
     private static String xor(String str, String key){
         StringBuffer sb=new StringBuffer();
         for(int i=0;i<str.length();i++){
