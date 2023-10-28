@@ -47,7 +47,7 @@ Decrypt：input 16bit ciphertext and 16bit key, output is 16bit plaintext.
 <br><span style="font-size: 20px;line-height: 1.8;">Decryption: input n-byte ciphertext and 16-byte key, output is n-byte plaintext.</span>
 
 <div style="text-align:center">
-    <img src="image/chanllenge3.png" width=95%">
+    <img src="image/chanllenge3.png" width=85%">
 </div>
 
 
@@ -57,7 +57,7 @@ Decrypt：input 16bit ciphertext and 16bit key, output is 16bit plaintext.
 <span style="font-size: 20px;line-height: 1.8;">the packet length remains 16 bits but the key length is 32 bits.</span>
 <br>
 <div style="text-align:center">
-    <img src="image/chanllenge4-1.png" width=90%">
+    <img src="image/chanllenge4-1.png" width=85%">
 </div>
 
 ### 3.4.2 Mid-encounter attack
@@ -73,7 +73,7 @@ Decrypt：input 16bit ciphertext and 16bit key, output is 16bit plaintext.
 ### 3.4.3 Triple Encryption: pattern of 48 bits (K1+K2+K3)
 <br>
 <div style="text-align:center">
-    <img src="image/chanllenge4-3.png" width=90%">
+    <img src="image/chanllenge4-3.png" width=85%">
 </div>
 <br>
 
@@ -82,12 +82,8 @@ Decrypt：input 16bit ciphertext and 16bit key, output is 16bit plaintext.
 - <span style="font-size: 20px;line-height: 1.8;">When the main function is called, the Random function generates a random vector IV, which does not change until the end of the program run.</span>
 - <span style="font-size: 20px;line-height: 1.8;">It can be called through the MainCBC interface.</span>
 <br><br>
-<span style="font-size: 20px;line-height: 1.8;">Encryption:<br>
-1.Generate IV vector when the Main function is started<br>
-2.Set the plaintext length to 3*16-bit = 48-bit<br>
-3.Enter the 16-bit key and 48-bit plaintext.<br>
-4.Get the result of CBC encryption based on S-AES.</span><br><br>
-
+<span style="font-size: 20px;line-height: 1.8;">Encryption:<br>1.Generate IV vector when the Main function is started<br>2.Set the plaintext length to 3*16-bit = 48-bit<br>3.Enter the 16-bit key and 48-bit plaintext.<br>4.Get the result of CBC encryption based on S-AES.</span>
+<br><br>
 
 <div style="text-align:center">
     <img src="image/chanllenge5.png" width=90%">
@@ -119,8 +115,9 @@ Input the ciphertext obtained after encryption of the previous text, and the dec
 
     1. Click "confirm" and the generated original text appears in "PlainText".
 
+
 <div style="text-align:center">
-    <img src="image/chanllenge1.png" width=80">
+    <img src="image/chanllenge1.png" width=80%">
 </div>
 
 
