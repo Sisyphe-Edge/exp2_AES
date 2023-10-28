@@ -1,109 +1,128 @@
-## Introduction
+# Introduction
 In this project, we designed a structure to use S-AES encryption which holds 16/ 32/ 48 -bit group length and 16-bit key length.
 
 
-## Structure - How it works?
-### It contains 4 parts.
-<div><span style="font-size: 16px;">
-- keyScheduler.java: keyScheduler class receives a 16-bit initial key string and calculates cipher keys.
-- AES.java: This class accepts clear text, and identifiers that identify encryption or decryption, and performs operations.
-- Main.java: Main class. Scheduling tests and the running of various UI modules, monitoring user operations. 
-  - This section gets the information entered by the user and controls the invocation of the keyScheduler and the AES encryption decryptor in terms of the number of bits or the string type of the information.  
-  - Meanwhile, this part can be controlled to invoke middle encounter attacks, and CBC encryption
-- Main.form: a format sheet
-- GF2_4: This is a call interface to a multiplication operation on the Galois domain for the column obfuscation module in the AES cryptosystem
-- [Image folder] contains images of AES.md
-</span></div>
+# Structure - How it works?
+## It contains 4 parts.
+
+- <span style="font-size: 17px;">keyScheduler.java: keyScheduler class receives a 16-bit initial key string and calculates cipher keys.</span>
+- <span style="font-size: 17px;">AES.java: This class accepts clear text, and identifiers that identify encryption or decryption, and performs operations.</span>
+- <span style="font-size: 17px;">Main.java: Main class. Scheduling tests and the running of various UI modules, monitoring user operations. </span>
+  - <span style="font-size: 15px;">This section gets the information entered by the user and controls the invocation of the keyScheduler and the AES encryption decryptor in terms of the number of bits or the string type of the information. </span> 
+  - <span style="font-size: 15px;">Meanwhile, this part can be controlled to invoke middle encounter attacks, and CBC encryption</span>
+- <span style="font-size: 17px;">Main.form: a format sheet</span>
+- <span style="font-size: 17px;">GF2_4: This is a call interface to a multiplication operation on the Galois domain for the column obfuscation module in the AES cryptosystem</span>
+- <span style="font-size: 17px;">[Image folder] contains images of AES.md</span>
+
 <div style="text-align:center">
-  <img src="image/test.gif" width=80%">
+  <img src="image/test.gif" width=90%">
 </div>
 
 
-## Examination
+# Examination
 
 
-### **第1关：基本测试**
+## **Level 1: Basic test**
 
-**加密**：输入8bit的明文和10bit的密钥，输出是8bit的密文。
-**解密**：输入8bit的密文和10bit的密钥，输出是8bit的明文。
+<span style="font-size: 20px;line-height: 1.8;">
+Encrypt：input 16bit plaintext and 16bit key, output is 16bit ciphertext.
+Decrypt：input 16bit ciphertext and 16bit key, output is 16bit plaintext.
+</span>
 
-![8-bitBinary.png](image%2F8-bitBinary.png)
-
-
-
-### **第2关：交叉测试**
-
-**与其他小组交叉测试-- 输出相同，测试成功**
-![test.png](image%2Ftest.png)
+<div style="text-align:center">
+    <img src="image/chanllenge1.png" width=95%">
+</div>
 
 
 
+## **Level 2: Cross-testing**
 
-### **第3关：扩展功能**
-
-**考虑到向实用性扩展**，加密算法的数据输入可以是ASII编码字符串(分组为1 Byte)，对应地输出也可以是ACII字符串。由于ASCII码范围为0~253，而加密后可能为负数，则有一定可能输出乱码。
-**加密**：输入n-byte的明文和10bit的密钥，输出是n-byte的密文。
-**解密**：输入n-byte的密文和n-byte的密钥，输出是n-byte的明文。
-
-
-![chanllenge3.png](image%2Fchanllenge3.png)
+<span style="font-size: 20px;line-height: 1.8;">Cross-testing with other groups - when inputs are the same outputs are the same and the test is successful.</span>
 
 
 
-### **第4关：暴力破解**
+## Level 3: Extended functionality
+<br><span style="font-size: 20px;line-height: 1.8;">Considering the extension to utility, the data input of the encryption algorithm can be an ASII-encoded string (grouped in 1 Byte), and correspondingly the output can be an ACII string. Since the ASCII code range is 0~253, and the encryption may be negative, there is a certain possibility of outputting garbled code.</span>
+<br><span style="font-size: 20px;line-height: 1.8;">Encryption: input n-byte plaintext and 16bit key, output is n-byte ciphertext.</span>
+<br><span style="font-size: 20px;line-height: 1.8;">Decryption: input n-byte ciphertext and 16-byte key, output is n-byte plaintext.</span>
 
-**使用多线程暴力破解相同密钥的明文和密文对。**
-
-![1.gif](image%2F1.gif)
-
-
-**暴力破解成功**
-
-![exploit.png](image%2Fexploit.png)
-
-
-**暴力破解失败**
-
-![exploitD.png](image%2FexploitD.png)
-
-
-![exploitSuc.png](image%2FexploitSuc.png)
+<div style="text-align:center">
+    <img src="image/chanllenge3.png" width=95%">
+</div>
 
 
 
+## Level 4: Multiple Encryption
+### 3.4.1 Double encryption: 
+<span style="font-size: 20px;line-height: 1.8;">the packet length remains 16 bits but the key length is 32 bits.</span>
+<br>
+<div style="text-align:center">
+    <img src="image/chanllenge4-1.png" width=90%">
+</div>
 
-### **第5关：封闭测试**
+### 3.4.2 Mid-encounter attack
 
-#### 设计代码，随机输入一对明密文对，出现不止一个密钥。
+<div style="text-align:center">
+    <img src="image/chanllenge4-2.2.png" width=55%">
+</div>
 
-![2.gif](image%2F2.gif)
+<div style="text-align:center">
+    <img src="image/chanllenge4-2.1.png" width=55%">
+</div>
+
+### 3.4.3 Triple Encryption: pattern of 48 bits (K1+K2+K3)
+<br>
+<div style="text-align:center">
+    <img src="image/chanllenge4-3.png" width=90%">
+</div>
+<br>
+
+## Level 5: Mode of operation
+- <span style="font-size: 20px;line-height: 1.8;">Encrypts longer plaintext messages based on the S-AES algorithm using Ciphered Chaining of Packets (CBC) mode.</span>
+- <span style="font-size: 20px;line-height: 1.8;">When the main function is called, the Random function generates a random vector IV, which does not change until the end of the program run.</span>
+- <span style="font-size: 20px;line-height: 1.8;">It can be called through the MainCBC interface.</span>
+<br><br>
+<span style="font-size: 20px;line-height: 1.8;">Encryption:<br>
+1.Generate IV vector when the Main function is started<br>
+2.Set the plaintext length to 3*16-bit = 48-bit<br>
+3.Enter the 16-bit key and 48-bit plaintext.<br>
+4.Get the result of CBC encryption based on S-AES.</span><br><br>
 
 
-#### 测试如下：
-
-![chanllenge5.png](image%2Fchanllenge5.png)
+<div style="text-align:center">
+    <img src="image/chanllenge5.png" width=90%">
+</div>
+<br><br>
+<span style="font-size: 20px;line-height: 1.8;">Decryption: <br>
+Same steps as encryption. <br>
+Input the ciphertext obtained after encryption of the previous text, and the decryption result is the same as the original plaintext.<br></span>
+<div style="text-align:center">
+    <img src="image/chanllenge5-2.png" width=90%">
+</div>
 
 
 
 ## Users' Manual
+1. ENCRYPT
 
-1. 加密(ENCRYPT部分)
+    1. enter the 16-bit length of the original text to be encrypted in "please input ciphertext". 1. enter the 10-bit key in "please input 10-bit Key";
 
-    1. 在“please input ciphertext”中输入8-bit长度的需要加密的原文；
+    1. enter the 16/32/48-bit key in "please input 16/32/48 bit Key". 1. click "confirm" and then enter the key in "Confirm";
 
-    1. 在“please input 10-bit Key”中输入10-bit长度的密钥；
+    1. After clicking "confirm", the generated cipher text appears in "CipherText".
 
-    1. 点击“confirm”后在“CipherText”中出现生成的密文。
+2. DECRYPT
 
-2. 解密(DECRYPT部分)
+    1. Enter the 26-bit ciphertext in the "please input ciphertext" field. 2;
 
-    1. 在“please input ciphertext”中输入8-bit长度的密文；
+    1. enter a 16/32/48-bit key in "please input 16/32/48 bit Key". 1. click "Confirm";
 
-    1. 在“please input 10-bit Key”中输入10-bit长度的密钥（此处应确保和原文加密时所使用的密钥一致）；
+    1. Click "confirm" and the generated original text appears in "PlainText".
 
-    1. 点击“confirm”后在“PlainText”中出现生成的原文。
+<div style="text-align:center">
+    <img src="image/chanllenge1.png" width=80">
+</div>
 
-![8-bitBinary.png](image%2F8-bitBinary.png)
 
 
 ### author: Yiming Yan, Xiangyu Ran. CQU.
