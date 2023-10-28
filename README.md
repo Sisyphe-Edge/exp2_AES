@@ -83,17 +83,16 @@ Decrypt：input 16bit ciphertext and 16bit key, output is 16bit plaintext.
 - <span style="font-size: 20px;line-height: 1.8;">It can be called through the MainCBC interface.</span>
 <br><br>
 <span style="font-size: 20px;line-height: 1.8;">Encryption:<br>1.Generate IV vector when the Main function is started<br>2.Set the plaintext length to 3*16-bit = 48-bit<br>3.Enter the 16-bit key and 48-bit plaintext.<br>4.Get the result of CBC encryption based on S-AES.</span>
-<br><br>
-
+<br>
 <div style="text-align:center">
-    <img src="image/chanllenge5.png" width=90%">
+    <img src="image/chanllenge5.png" width=55%">
 </div>
 <br><br>
-<span style="font-size: 20px;line-height: 1.8;">Decryption: <br>
-Same steps as encryption. <br>
-Input the ciphertext obtained after encryption of the previous text, and the decryption result is the same as the original plaintext.<br></span>
+<span style="font-size: 50px;line-height: 1.8;">Decryption: <br>
+Same steps as encryption. <br>Input the ciphertext obtained after encryption of the previous text, and the decryption result is the same as the original plaintext.<br></span>
+<br>
 <div style="text-align:center">
-    <img src="image/chanllenge5-2.png" width=90%">
+    <img src="image/chanllenge5-2.png" width=55%">
 </div>
 
 
