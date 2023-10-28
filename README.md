@@ -30,7 +30,7 @@ Decrypt：input 16bit ciphertext and 16bit key, output is 16bit plaintext.
 </span>
 
 <div style="text-align:center">
-    <img src="image/chanllenge1.png" width=95%">
+    <img src="image/chanllenge1.png" width=88%">
 </div>
 
 
@@ -47,7 +47,7 @@ Decrypt：input 16bit ciphertext and 16bit key, output is 16bit plaintext.
 <br><span style="font-size: 20px;line-height: 1.8;">Decryption: input n-byte ciphertext and 16-byte key, output is n-byte plaintext.</span>
 
 <div style="text-align:center">
-    <img src="image/chanllenge3.png" width=85%">
+    <img src="image/chanllenge3.png" width=88%">
 </div>
 
 
@@ -57,7 +57,7 @@ Decrypt：input 16bit ciphertext and 16bit key, output is 16bit plaintext.
 <span style="font-size: 20px;line-height: 1.8;">the packet length remains 16 bits but the key length is 32 bits.</span>
 <br>
 <div style="text-align:center">
-    <img src="image/chanllenge4-1.png" width=85%">
+    <img src="image/chanllenge4-1.png" width=88%">
 </div>
 
 ### 3.4.2 Mid-encounter attack
@@ -73,7 +73,7 @@ Decrypt：input 16bit ciphertext and 16bit key, output is 16bit plaintext.
 ### 3.4.3 Triple Encryption: pattern of 48 bits (K1+K2+K3)
 <br>
 <div style="text-align:center">
-    <img src="image/chanllenge4-3.png" width=85%">
+    <img src="image/chanllenge4-3.png" width=88%">
 </div>
 <br>
 
@@ -88,12 +88,38 @@ Decrypt：input 16bit ciphertext and 16bit key, output is 16bit plaintext.
     <img src="image/chanllenge5.png" width=55%">
 </div>
 <br><br>
-<span style="font-size: 50px;line-height: 1.8;">Decryption: <br>
+<span style="font-size: 20px;line-height: 1.8;">Decryption: <br>
 Same steps as encryption. <br>Input the ciphertext obtained after encryption of the previous text, and the decryption result is the same as the original plaintext.<br></span>
 <br>
 <div style="text-align:center">
     <img src="image/chanllenge5-2.png" width=55%">
 </div>
+
+## Interfaces
+
+| filename          | interface function name                   | input parameters                    | output parameters    |describtion          |
+|-------------------|-------------------------------------------|-------------------------------------|----------------------|---------|
+| keyScheduler.java | `keyScheduler(String a)`                  | `String a`                          | void（构造函数）           |
+| keyScheduler.java | `getKeys()`                               | null                               | `String[]`（密钥串）      |
+| keyScheduler.java | `two_bit_binaryToDec(String str)`         | `String str`                        | `int` （转换后的整数）       |
+| AES.java          | `AES(String Text, String[] keyT, int n)`  | `String Text, String[] keyT, int n` | void（构造函数）           |
+| AES.java          | `getResultCipher()`                       | null                               | `String`（加密结果的密文）    |
+| AES.java          | `getResultPlain()`                        | null                               | `String`（解密结果的明文）    |
+
+
+| filename| interface function name                           | input parameters              | output parameters | describtion          |
+|-------------------|-------------------------------------------|-------------------------------------|----------------------|---------|
+| Main   | `Main()`                                          | null                         | void      | Mid-encounter attack |
+| Main   | `meet_in_the_middle(String plain, String cipher)` | `String plain, String cipher` | void      | formatCheck          |
+| Main   | `formatCheck(String str)`                         | `String str`                  | `boolean` |                      |
+| Main   | `formatTransform(char c)`                         | `char c`                      | `String`  |                      |
+| Main   | `stringToChar(String str)`                        | `String str`                  | `String`  |                      |
+| Main   | `CBCScheduler()`                                  | void                          | void      | CBC Encryption Sche  |
+| Main   | `CBC(int n)`                                      | `int n`                       | void      |                      |
+| Main   | `xor(String str, String key)`                     | `String str, String key`      | `String`  |                      |
+| Main   | `int2_16bitString(int n)`                         | `int n`                       | `String`  |                      |
+
+
 
 
 
@@ -116,9 +142,8 @@ Same steps as encryption. <br>Input the ciphertext obtained after encryption of 
 
 
 <div style="text-align:center">
-    <img src="image/chanllenge1.png" width=80%">
+    <img src="image/chanllenge1.png" width=88%">
 </div>
-
 
 
 ### author: Yiming Yan, Xiangyu Ran. CQU.
